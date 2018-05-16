@@ -30,7 +30,8 @@
 	<!-- Data Source Declaration --> 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/ormsuite" />
+		<property name="url" value="jdbc:mysql://csc694project.c82g7sh2ez0r.us-east-2.rds.amazonaws.com:3306/ormsuite" />
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/ormsuite" />-->
 		<property name="username" value="root" />
 		<property name="password" value="ossybobo2010" />	
 	</bean>

@@ -1,175 +1,23 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" 
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <style>
-    	.mainmenu{
-    		margin-left: 20%;
-    		margin-top: 8%;
-    		width: 55%;
-    	}
-    	.row2{
-    		margin-top: 9%;
-    	}
-    	.sidemenu{
-    		margin-top: 1%;
-    	}
-    	.nav-sidebar{
-    		margin-right: -21px;
-    		margin-bottom: 20px;
-    		margin-left: -15px;
-    	}
-    	.menuOption{
-    		width: 73%;
-    		margin-left: 0%;
-    	}
-    	
-    </style>
-	<title>Risk Management Tool - Main View</title>
+    
+	<title>Operational Risk Management Tools</title>
 </h:head>
 <h:body>
-	<div class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Operational Risk Management Tool</a>
-			</div>
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Logged In as: #{userBean.loggeduser.getRole().getRole()} </a></li>
-					<li>
-						<h:form id="form3">
-							<p:commandLink action="#{userBean.logout()}" style="margin-top:1%"><h:outputText style="color: gray;" value="Sign out"/></p:commandLink>
-						</h:form>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="container" style="margin-left:0.2%; width: 99.5%">
-		<div class="row">
-			<div class="col-lg-2 sidebar" style="background-color: #f2f2f2; height: 100% ">
-				<ul class="nav nav-sidebar" style="width:156%">
-					<li class="sidemenu"><a class="btn btn-primary btn-md menuOption" href="#">Menu</a></li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" onclick="PF('userdlg').show();" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
-							<h:outputText value="User Manager"/>
-						</p:commandLink>
-					</li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" style="" onclick="PF('userdlg').show();">
-							<h:outputText value="KRI Manager"/>
-						</p:commandLink>
-					</li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" onclick="PF('userdlg').show();">
-							<h:outputText value="Incident Register"/>
-						</p:commandLink>
-					</li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" onclick="PF('userdlg').show();">
-							<h:outputText value="Risk Assessment"/>
-						</p:commandLink>
-					</li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" onclick="PF('userdlg').show();">
-							<h:outputText value="View Report"/>
-						</p:commandLink>
-					</li>
-					<li class="sidemenu"><p:commandLink class="btn btn-primary btn-md menuOption" onclick="PF('userdlg').show();">
-							<h:outputText value="Capital Charge - BIA"/>
-						</p:commandLink>
-					</li>
-				</ul>
-			</div>
-			<div class="col-lg-10">
-				<span style="font-weight: bold; font-size: 20px">Overview</span><p:separator/><p:spacer/>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+			<span style="font-weight: bold; font-size: 20px">Overview</span><p:separator/><p:spacer/>
 				<span>Use the menu system on the left bar to navigate the application.</span>
-			</div>
-		</div>
-	</div>
-	
-		<p:dialog id="dlg1" header="User Manager" widgetVar="userdlg" modal="true" height="380" width="600" resizable="false" position="center" draggable="false" closable="false" responsive="true" onShow="PF('userdlg').initPosition()">
-    		<p:tabView id="tabView1">
-    			<p:tab id="tab1" title="Create User">
-    				<h:form id="form1">
-    					<p:messages id="messages" closable="true"/>
-    					<h:panelGrid columns="3" cellpadding="10" cellspacing="3">
-    						<p:outputLabel for="firstname" value="Firstname: "/>
-    						<p:inputText id="firstname" value="#{userBean.user.firstname}" label="Firstname" required="true" requiredMessage="Firstname required" validatorMessage="Only letters (A-Z, a-z) allowed in this fields">
-    							<f:validateRegex pattern="^[A-Z][a-zA-Z]+"/>
-    						</p:inputText>
-    						<p:message for="firstname" display="text"/>
-    						
-    						<p:outputLabel for="lastname" value="Lastname: "/>
-    						<p:inputText id="lastname" value="#{userBean.user.lastname}" label="Lastname" required="true" requiredMessage="Lastname required" validatorMessage="Only letters (A-Z, a-z) allowed in this field">
-    							<f:validateRegex pattern="^[a-zA-z]+([ '-][a-zA-Z]+)*" />
-    						</p:inputText>
-    						<p:message for="lastname" display="text"/>
-    						
-    						<p:outputLabel for="username" value="Username: "/>
-    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
-    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
-    						</p:inputText>
-    						<p:message for="username" display="text"/>
-    						
-    						<p:outputLabel for="password" value="Password: "/>
-    						<p:password id="password" value="#{userBean.user.pwd}" label="Password" required="true" requiredMessage="Password required" />
-    						<p:message for="password" display="text"/>
-    						
-    						<p:outputLabel for="email" value="Email: "/>
-    						<p:inputText id="email" value="#{userBean.user.email}" label="email" required="true" requiredMessage="Email required" validatorMessage="Invalid email format">
-    							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-    						</p:inputText>
-    						<p:message for="email" display="text"/>
-    						
-    						<p:outputLabel for="role" value="Role: "/>
-    						<p:selectOneMenu id="role" value="#{userBean.user.role}" style="width:170px" required="true" requiredMessage="Role required" converter="selectOneMenuConverter">
-    							<f:selectItem itemLabel="Select user role" itemValue=""></f:selectItem>
-    							<f:selectItems value="#{roleBean.roles}" var="role" itemLabel="#{role.role}" itemValue="#{role}" />
-    						</p:selectOneMenu>
-    						<p:message for="role" display="text"/>
-    						
-    						<p:outputLabel for="departments" value="Department: "/>
-    						<p:selectOneMenu id="departments" value="#{userBean.user.department}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
-    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
-    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
-    						</p:selectOneMenu>
-    						<p:commandLink class="btn btn-default" onclick="PF('departmentdlg').show();">
-    							<h:outputText value="Add department"/>
-    						</p:commandLink>
-    					</h:panelGrid><br/>
-    					<p:spacer width="90" height="30"/>
-    					<p:commandButton value="Create User" actionListener="#{userBean.addUser()}" update="form1"/>
-    					<p:spacer width="70" height="30"/>
-    					<p:commandButton value="Cancel" oncomplete="PF('userdlg').hide();"/>
-    				</h:form>
-    			</p:tab>
-    			<p:tab title="Update User">
-    			
-    			</p:tab>
-    			<p:tab title="Delete User">
-    			
-    			</p:tab>
-    		</p:tabView>
-		</p:dialog>
-		<p:dialog id="dlg2" header="Add Department" widgetVar="departmentdlg" modal="true" height="150" width="420" resizable="false" position="center" draggable="false" closable="false" responsive="true" onShow="PF('departmentdlg').initPosition()">
-    		<h:form id="form2">
-    			<p:messages id="messages"/>
-    			<h:panelGrid columns="2" cellpadding="10" cellspacing="3">
-    				<p:outputLabel for="department" value="Department:  "/>
-    				<p:inputText id="department" value="#{departmentBean.department.dept_name}" required="true"/>
-    				<p:spacer width="20"/> <p:spacer width="20"/>
-    				<p:commandButton id="addDepartment" value="Add Department" actionListener="#{departmentBean.addDepartment(departmentBean.department)}" update="messages"/>
-    				
-    				<p:commandButton style="margin-left:10%" value="Cancel" oncomplete="PF('departmentdlg').hide();">
-    					 <p:ajax update=":tabView1:form1:departments" listener="#{departmentBean.allDepartments()}"/>
-    				</p:commandButton>
-    			</h:panelGrid>
-    		</h:form>
-    	</p:dialog> 
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		</ui:define>
+	</ui:composition>
+
 </h:body>
 </html>
