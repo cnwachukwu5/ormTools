@@ -44,6 +44,9 @@ public class User implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="roleID")
 	private Role role;
+	
+	@Column(name="isActive", nullable=false)
+	private boolean isActive;
 
 	public int getUserid() {
 		return userid;
@@ -109,6 +112,14 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	public void reset() {
 		this.setDepartment(null);
 		this.setEmail("");
@@ -127,7 +138,8 @@ public class User implements Serializable {
 				"\n\tUsername: " + this.username + 
 				"\n\tEmail: " + this.email +
 				"\n\tDepartment: " + this.department +
-				"\n\tRole: " + this.role;
+				"\n\tRole: " + this.role + 
+				"\n\tActive: " + this.isActive;
 	}
 
 }

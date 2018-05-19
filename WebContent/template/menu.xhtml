@@ -16,7 +16,7 @@
 					</p:commandLink>
 				</li>
 				<li>
-					<p:commandLink class="menulist" action="#{userBean.showUserManager()}">
+					<p:commandLink class="menulist" action="#{userBean.showUserManager()}" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
 						<h:outputText value="User Manager" /> 
 					</p:commandLink>
 				</li>

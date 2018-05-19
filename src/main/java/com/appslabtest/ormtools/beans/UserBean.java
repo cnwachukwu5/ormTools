@@ -150,6 +150,7 @@ public class UserBean implements Serializable {
 			 	new_user.setEmail(user.getEmail());
 			 	new_user.setDepartment(user.getDepartment());
 			 	new_user.setRole(user.getRole());
+			 	new_user.setActive(true);
 			
 			 	getUserService().addUser(new_user);
 		
