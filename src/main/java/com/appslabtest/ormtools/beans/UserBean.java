@@ -186,4 +186,8 @@ public class UserBean implements Serializable {
 	public String logout() {
 		return "index";
 	}
+	
+	public String showUserManager() {
+		return "usermanager";
+	}
 }

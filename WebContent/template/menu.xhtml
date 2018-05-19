@@ -8,33 +8,35 @@
 </head>
 <h:body>
 	<ui:composition>
-		<ul class="menu">
-			<li>
-				<p:commandLink class="menulist">
-					<h:outputText value="Menu"/> 
-				</p:commandLink>
-			</li>
-			<li>
-				<p:commandLink class="menulist">
-					<h:outputText value="User Manager" /> 
-				</p:commandLink>
-			</li>
-			<li>
-				<p:commandLink class="menulist">
-					<h:outputText value="KRI Manager" /> 
-				</p:commandLink>
-			</li>
-			<li>
-				<p:commandLink class="menulist">
-					<h:outputText value="Incident Register" /> 
-				</p:commandLink>
-			</li>
-			<li>
-				<p:commandLink class="menulist">
-					<h:outputText value="View Report" /> 
-				</p:commandLink>
-			</li>
-		</ul>
+		<h:form>
+			<ul class="menu">
+				<li>
+					<p:commandLink class="menulist">
+						<h:outputText value="Menu"/> 
+					</p:commandLink>
+				</li>
+				<li>
+					<p:commandLink class="menulist" action="#{userBean.showUserManager()}">
+						<h:outputText value="User Manager" /> 
+					</p:commandLink>
+				</li>
+				<li>
+					<p:commandLink class="menulist">
+						<h:outputText value="KRI Manager" /> 
+					</p:commandLink>
+				</li>
+				<li>
+					<p:commandLink class="menulist">
+						<h:outputText value="Incident Register" /> 
+					</p:commandLink>
+				</li>
+				<li>
+					<p:commandLink class="menulist">
+						<h:outputText value="View Report" /> 
+					</p:commandLink>
+				</li>
+			</ul>
+		</h:form>
 	</ui:composition>
 </h:body>
 </html>
