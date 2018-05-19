@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     
 	<title>Operational Risk Management Tools</title>
-	<style>
-	html, body {
+	  <style>
+		html, body {
     		height: 100%;
     		width: 100%;
 		}
 		body{
 			overflow-x: hidden;
 			font-size: 12px;
+			background-color: #f5f5f5;
 		}
 		.contain-fluid{
 			width:100%;
@@ -27,12 +28,13 @@
 		.sidebar {
     		position: fixed;
 			height:100%;
-    		background:gray;
+    		background:silver;
 		}
 		
 		.contents{
 			position: fixed;
 			left: 16.7%;
+			
 		}
 		ul.menu {
 				list-style-type: none;
@@ -55,18 +57,21 @@
 				color: white;
 				text-decoration: none;
 			}
+			div{
+				margin:0; padding:0;
+			}
 		
 	</style>
 </h:head>
 <h:body>
-	<div class="container navbar-inverse" style="padding: 0;margin:0; width:100%">
-			<div class="row" style="background-color:">
-				<div class="col-md-9 col-lg-9" style="background-color:">
-					<div class="navbar-header" style="margin-left:3%; padding:0">
+	<div class="container navbar-inverse" style="width:100%">
+			<div class="row">
+				<div class="col-md-9 col-lg-9">
+					<div class="navbar-header" style="margin-left:3%;">
 						<a class="navbar-brand" href="#">Operational Risk Management Tool</a>
 					</div>
 				</div>
-				<div class="col-md-3 col-lg-3" style="background-color:">
+				<div class="col-md-3 col-lg-3">
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="#">Logged In as: #{userBean.loggeduser.getRole().getRole()} </a></li>
@@ -80,7 +85,7 @@
 				</div>
 			</div>			
 		</div>
-		<div class="container-fluid" style="">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-2 col-lg-2 sidebar" style="padding:0;margin:0;height:100%">
 					<h:form>
@@ -113,7 +118,7 @@
 			</ul>
 		</h:form>
 			</div>
-				<div class="col-md-10 col-lg-10 contents" style="padding:0;margin:0;background-color:pink">
+				<div class="col-md-10 col-lg-10 contents" style="padding:0;margin:0;">
 					<p:tabView id="tabView1" style="width:100%">
     			<p:tab id="tab1" title="Create User">
     				<h:form id="form1">
