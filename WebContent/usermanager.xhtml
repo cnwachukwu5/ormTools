@@ -244,7 +244,27 @@
     				</h:form>	
     			</p:tab>
     			<p:tab title="Delete User">
-    			
+    				<h:form id="form5">
+    					<p:messages id="messages" closable="true"/>
+    					<h:panelGrid columns="6" cellpadding="10" cellspacing="3">
+    						<p:spacer width="100"/> 
+    						<h:outputText value="Enter username to search: "/> <p:spacer width="20"/>
+    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:commandButton id="deleteUser" value="Delete User" actionListener="#{userBean.deleteUser()}" update="form5">
+    							<p:confirm header="Confirmation" message="This operation will deactivate the user. Do you want to continue?" icon="ui-icon-alert"/>
+    						</p:commandButton>
+    						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+    							<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+    							<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    						</p:confirmDialog>
+    						<p:blockUI block="form5" trigger="deleteUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    					</h:panelGrid>
+    				</h:form>	
     			</p:tab>
     		</p:tabView>
     		<p:dialog id="dlg2" header="Add Department" widgetVar="departmentdlg" height="150" width="420" resizable="false" position="center" draggable="false" closable="false" responsive="true" onShow="PF('departmentdlg').initPosition()">

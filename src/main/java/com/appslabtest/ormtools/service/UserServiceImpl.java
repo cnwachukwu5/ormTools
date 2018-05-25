@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUser(User user) throws Exception {
-		User updatedUser = findUser(user);
+		User updatedUser = findUserForUpdating(user.getUsername());
 		
 		if(updatedUser == null) {
 			throw new Exception("User not found");
@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
 		updatedUser.setLastname(user.getLastname());
 		updatedUser.setPwd(user.getPwd());
 		updatedUser.setRole(user.getRole());
+		updatedUser.setActive(true);
 		
 		userRepository.save(updatedUser);
 	}
@@ -49,13 +50,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void deleteUser(User user) throws Exception {
-		User deletedUser = userRepository.findOne(user.getUserid());
+		User deletedUser = findUser(user);
 		
 		if (deletedUser == null) {
 			throw new Exception("User does not exist");
+		}else {
+			deletedUser.setActive(false);
+			userRepository.save(deletedUser);
 		}
-		
-		userRepository.delete(deletedUser);
 	}
 	
 	@Override
@@ -65,5 +67,11 @@ public class UserServiceImpl implements UserService {
 		return Loggeduser;
 	}
 	
+	@Override
+	@Transactional
+	public User findUserForUpdating(String username) {
+		User updateUser = userRepository.findUserForUpdating(username);
+		return updateUser;
+	}
 
 }

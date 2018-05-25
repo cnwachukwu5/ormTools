@@ -142,7 +142,7 @@ public class UserBean implements Serializable {
 	}
 	
 	public void checkUser() {
-		User userExists = getUserService().findUser(user);
+		User userExists = getUserService().findUserForUpdating(user.getUsername());
 		if(userExists == null) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!","Login");
 			
@@ -153,6 +153,7 @@ public class UserBean implements Serializable {
 			user.setEmail(userExists.getEmail());
 			user.setRole(userExists.getRole());
 			user.setDepartment(userExists.getDepartment());
+			user.setActive(true);
 		}
 	}
 	
@@ -185,14 +186,25 @@ public class UserBean implements Serializable {
 	
 	public void updateUser() throws Exception {
 		
-		getUserService().updateUser(user);
-		addMessage(FacesMessage.SEVERITY_INFO, "User Information updated successfully .","Update");
-        this.reset();
+		if(user == null) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist.","Update");
+		}else {
+			getUserService().updateUser(user);
+			addMessage(FacesMessage.SEVERITY_INFO, "User Information updated successfully .","Update");
+	        this.reset();
+		}
+		
 	}
 	
 	public void deleteUser() throws Exception {
-		getUserService().deleteUser(user);
-		addMessage(FacesMessage.SEVERITY_INFO, "User Information deleted successfully .","Delete");
+		
+		if(user == null) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist.","Delete");
+		}else {
+			getUserService().deleteUser(user);
+			addMessage(FacesMessage.SEVERITY_INFO, "User Information deleted successfully .","Delete");
+		}
+		
 	}
 	
 	public void reset() {
