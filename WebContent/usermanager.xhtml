@@ -34,6 +34,7 @@
 		.contents{
 			position: fixed;
 			left: 16.7%;
+			overflow-y: auto;
 			
 		}
 		ul.menu {
@@ -124,34 +125,35 @@
     				<h:form id="form1">
     					<p:messages id="messages" closable="true"/>
     					<h:panelGrid columns="5" cellpadding="10" cellspacing="3">
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						<p:outputLabel for="firstname" value="Firstname: "/><p:spacer width="20"/>
-    						<p:inputText id="firstname" value="#{userBean.user.firstname}" label="Firstname" required="true" requiredMessage="Firstname required" validatorMessage="Only letters (A-Z, a-z) allowed in this fields">
+    						<p:inputText size="50" id="firstname" value="#{userBean.user.firstname}" label="Firstname" required="true" requiredMessage="Firstname required" validatorMessage="Only letters (A-Z, a-z) allowed in this fields">
     							<f:validateRegex pattern="^[A-Z][a-zA-Z]+"/>
     						</p:inputText><p:spacer width="20"/>
     						<p:message for="firstname" display="text"/>
     						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						
     						<p:outputLabel for="lastname" value="Lastname: "/><p:spacer width="20"/>
-    						<p:inputText id="lastname" value="#{userBean.user.lastname}" label="Lastname" required="true" requiredMessage="Lastname required" validatorMessage="Only letters (A-Z, a-z) allowed in this field">
+    						<p:inputText size="50" id="lastname" value="#{userBean.user.lastname}" label="Lastname" required="true" requiredMessage="Lastname required" validatorMessage="Only letters (A-Z, a-z) allowed in this field">
     							<f:validateRegex pattern="^[a-zA-z]+([ '-][a-zA-Z]+)*" />
     						</p:inputText><p:spacer width="20"/>
     						<p:message for="lastname" display="text"/>
     						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						
     						<p:outputLabel for="username" value="Username: "/><p:spacer width="20"/>
-    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    						<p:inputText size="50" id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
     							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
     						</p:inputText><p:spacer width="20"/>
     						<p:message for="username" display="text"/>
     						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						
     						<p:outputLabel for="password" value="Password: "/><p:spacer width="20"/>
-    						<p:password id="password" value="#{userBean.user.pwd}" label="Password" required="true" requiredMessage="Password required" /><p:spacer width="20"/>
+    						<p:password size="50" id="password" value="#{userBean.user.pwd}" label="Password" required="true" requiredMessage="Password required" /><p:spacer width="20"/>
     						<p:message for="password" display="text"/>
     						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						
     						<p:outputLabel for="email" value="Email: "/><p:spacer width="20"/>
-    						<p:inputText id="email" value="#{userBean.user.email}" label="email" required="true" requiredMessage="Email required" validatorMessage="Invalid email format">
+    						<p:inputText size="50" id="email" value="#{userBean.user.email}" label="email" required="true" requiredMessage="Email required" validatorMessage="Invalid email format">
     							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
     						</p:inputText><p:spacer width="20"/>
     						<p:message for="email" display="text"/>
@@ -184,7 +186,62 @@
     				</h:form>
     			</p:tab>
     			<p:tab title="Update User">
-    			
+    				<h:form id="form3">
+    					<p:messages id="messages" closable="true"/>
+    					<h:panelGrid columns="6" cellpadding="10" cellspacing="3">
+    						<p:spacer width="100"/> 
+    						<h:outputText value="Enter username to search: "/> <p:spacer width="20"/>
+    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:commandButton id="searchUser" value="Search User" actionListener="#{userBean.checkUser()}" update="@form :tabView1:form4"/>
+    						<p:blockUI block="form3" trigger="searchUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    					</h:panelGrid>
+    				</h:form>	
+    				
+    				<h:form id="form4">	
+    					<h:panelGrid columns="4" cellpadding="10" cellspacing="3">
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="firstname" value="Firstname: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="firstname" value="#{userBean.user.firstname}" label="Firstname" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="lastname" value="Lastname: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="lastname" value="#{userBean.user.lastname}" label="Lastname" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="email" value="Email: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="email" value="#{userBean.user.email}" label="Email" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100"/> 
+    						<p:outputLabel for="role" value="Role: "/>
+    						<p:spacer width="20"/>
+    						<p:selectOneMenu id="role" value="#{userBean.user.role}" style="width:170px" required="true" requiredMessage="Role required" converter="selectOneMenuConverter">
+    							<f:selectItem itemLabel="Select user role" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{roleBean.roles}" var="role" itemLabel="#{role.role}" itemValue="#{role}" />
+    						</p:selectOneMenu>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="departments" value="Department: "/>
+    						<p:spacer width="20"/>
+    						<p:selectOneMenu id="departments" value="#{userBean.user.department}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
+    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
+    						</p:selectOneMenu>    						
+    					</h:panelGrid><br/>
+    					<p:spacer width="200" height="30"/>
+    					<p:commandButton id="updateUser" value="Update User" actionListener="#{userBean.updateUser()}" update="@form :tabView1:form3 "/>
+    					<p:blockUI block="form4" trigger="updateUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    				</h:form>	
     			</p:tab>
     			<p:tab title="Delete User">
     			

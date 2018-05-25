@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Transactional
-	public User updateUser(User user) throws Exception {
-		User updatedUser = userRepository.findOne(user.getUserid());
+	public void updateUser(User user) throws Exception {
+		User updatedUser = findUser(user);
 		
 		if(updatedUser == null) {
 			throw new Exception("User not found");
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 		updatedUser.setPwd(user.getPwd());
 		updatedUser.setRole(user.getRole());
 		
-		return updatedUser;
+		userRepository.save(updatedUser);
 	}
 	
 	@Override

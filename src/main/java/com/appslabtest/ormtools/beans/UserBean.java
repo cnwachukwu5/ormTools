@@ -3,6 +3,7 @@ package com.appslabtest.ormtools.beans;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 //import javax.faces.bean.ManagedBean;
@@ -129,12 +130,29 @@ public class UserBean implements Serializable {
 			if(loggeduser.getPwd().equals(user.getPwd())) {
 				return "/main";
 			}else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid user credentials!", "Login"));
+				//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid user credentials!", "Login"));
+				addMessage(FacesMessage.SEVERITY_ERROR, "Invalid user credentials!","Login");
 				return "";
 			}
 		}else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!", "Login"));
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!", "Login"));
+			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!","Login");
 			return "";
+		}
+	}
+	
+	public void checkUser() {
+		User userExists = getUserService().findUser(user);
+		if(userExists == null) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!","Login");
+			
+		}else {
+			addMessage(FacesMessage.SEVERITY_INFO, "User " + userExists.getFirstname() + " does exist!","Login");
+			user.setFirstname(userExists.getFirstname());
+			user.setLastname(userExists.getLastname());
+			user.setEmail(userExists.getEmail());
+			user.setRole(userExists.getRole());
+			user.setDepartment(userExists.getDepartment());
 		}
 	}
 	
@@ -153,11 +171,10 @@ public class UserBean implements Serializable {
 			 	new_user.setActive(true);
 			
 			 	getUserService().addUser(new_user);
-		
-			 	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User successfully created", "User Creation"));
+			 	addMessage(FacesMessage.SEVERITY_INFO, "User successfully created!","User Creation");
 			 	reset();
 		}catch(DataAccessException e) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User creation error!", "User Creation"));
+				addMessage(FacesMessage.SEVERITY_ERROR, "User creation error!","User Creation");
 				e.printStackTrace();
 		 }
 		}//End of method
@@ -167,16 +184,15 @@ public class UserBean implements Serializable {
 	}
 	
 	public void updateUser() throws Exception {
-		getUserService().updateUser(user);
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Update","User Information updated successfully ."));
+		getUserService().updateUser(user);
+		addMessage(FacesMessage.SEVERITY_INFO, "User Information updated successfully .","Update");
         this.reset();
 	}
 	
 	public void deleteUser() throws Exception {
 		getUserService().deleteUser(user);
-		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Delete","User Information deleted successfully ."));
+		addMessage(FacesMessage.SEVERITY_INFO, "User Information deleted successfully .","Delete");
 	}
 	
 	public void reset() {
@@ -190,5 +206,10 @@ public class UserBean implements Serializable {
 	
 	public String showUserManager() {
 		return "usermanager";
+	}
+	
+	public void addMessage(Severity msg, String summary, String details) {
+		FacesMessage message = new FacesMessage(msg,summary, details);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }
