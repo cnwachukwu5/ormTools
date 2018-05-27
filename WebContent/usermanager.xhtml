@@ -61,6 +61,47 @@
 			div{
 				margin:0; padding:0;
 			}
+			.dropbtn {
+    		display:block;
+    		padding: 2 15px;
+    		font-size: 13px;
+    		border: none;	
+    		cursor: pointer;
+    		width:100%;
+		}
+		
+		.dropdown {
+    		position: relative;
+    		display: inline-block;
+    		width:100%;
+		}
+		
+		.dropdown-content {
+    		display: none;
+    		position: absolute;
+    		background-color: #f9f9f9;
+    		width:100%;
+    		z-index: 1;
+		}
+		.dropdown-content a {
+    		color: black;
+    		padding: 12px 16px;
+    		text-decoration: none;
+    		display: block;
+		}
+		
+		.dropdown-content a:hover {
+			background-color: #ff6347;
+			color: white;
+			}
+
+		.dropdown:hover .dropdown-content {
+   		 display: block;
+		}
+
+		.dropdown:hover .dropbtn {
+    		background-color: silver;
+		}
 		
 	</style>
 </h:head>
@@ -102,9 +143,15 @@
 					</p:commandLink>
 				</li>
 				<li>
-					<p:commandLink class="menulist">
-						<h:outputText value="KRI Manager" /> 
-					</p:commandLink>
+					<div class="dropdown" style="padding:0;margin:0">				
+						<a class="dropbtn">KRI Manager</a>
+						<div class="dropdown-content">
+							<a href="#">Add KRI</a>
+							<a href="#">Update KRI</a>
+							<a href="#">Delete KRI</a>
+							<a href="#">Report KRI Value</a>
+						</div>
+					</div>
 				</li>
 				<li>
 					<p:commandLink class="menulist">
