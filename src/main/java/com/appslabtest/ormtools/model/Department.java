@@ -27,6 +27,9 @@ public class Department implements Serializable{
 	
 	@OneToMany(mappedBy="department")
 	private List<User> users;
+	
+	@OneToMany(mappedBy="kri_owner_dept")
+	private List<KRI> kris;
 
 	public Integer getDeptid() {
 		return deptid;
