@@ -46,6 +46,9 @@ public class KRI_Value implements Serializable{
 	
 	@Column(name="kri_value_justification", nullable=false)
 	private String kri_value_justification;
+	
+	@Column(name="quarter", nullable = false)
+	private String quarter;
 
 	public int getId() {
 		return id;
@@ -111,6 +114,14 @@ public class KRI_Value implements Serializable{
 		this.kri_value_justification = kri_value_justification;
 	}
 	
+	public String getQuarter() {
+		return quarter;
+	}
+
+	public void setQuarter(String quarter) {
+		this.quarter = quarter;
+	}
+
 	public String toString() {
 		return "KRIValue: " + 
 				"KRI_CODE: " + this.getKri_code() + 
