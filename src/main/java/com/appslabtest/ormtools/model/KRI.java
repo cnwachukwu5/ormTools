@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,10 +18,6 @@ public class KRI implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="id", nullable=false)
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	
 	@Column(name="kri_code", nullable=false)
 	private String kri_code;
 	
@@ -48,14 +42,6 @@ public class KRI implements Serializable{
 	
 	@Column(name="kri_deactivate_reason")
 	private String kri_deactivate_reason;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getKri_code() {
 		return kri_code;
@@ -123,7 +109,6 @@ public class KRI implements Serializable{
 	
 	public String toString() {
 		return "KRI: " + 
-				"\n\tKRIID: " + this.getId() + 
 				"\n\tKRI_Code: " + this.getKri_code() + 
 				"\n\tKRI_DESC: " + this.getKri_desc() + 
 				"\n\tKRI_REASON_COLLECTION: " + this.getKri_reason_for_collection() + 
