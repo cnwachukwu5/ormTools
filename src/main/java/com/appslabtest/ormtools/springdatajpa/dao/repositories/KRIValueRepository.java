@@ -18,6 +18,6 @@ public interface KRIValueRepository extends JpaRepository<KRI_Value, Integer>{
 	public List<KRI_Value> findAllKRIValues_For_A_Given_Month(int kri_value_month, String kri_value_year, int valueSubmittedBy);
 	
 	//Return all quarterly values for a given KRI
-	@Query(value="SELECT * FROM KRI_Value WHERE quarter = ?1 AND kri_value_year = ?2 AND valueSubmittedBy = ?3", nativeQuery = true)
-	public List<KRI_Value> findAllKRIValues_For_A_Given_Quarter(String quarter, String kri_value_year, int valueSubmittedBy);
+	@Query(value="SELECT * FROM KRI_Value WHERE quarter = ?1 AND kri_value_year = ?2 AND valueSubmittedBy = ?3 AND kri_code = ?4", nativeQuery = true)
+	public List<KRI_Value> findAllKRIValues_For_A_Given_Quarter(String quarter, String kri_value_year, int valueSubmittedBy, String kri_code);
 }
