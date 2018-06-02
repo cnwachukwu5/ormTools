@@ -107,6 +107,17 @@ public class KRI implements Serializable{
 		this.kri_deactivate_reason = kri_deactivate_reason;
 	}
 	
+	public void reset() {
+		setKri_code("");
+		setKri_deactivate_reason("");
+		setKri_desc("");
+		setKri_lower_bound(0.0);
+		setKri_owner_dept(null);
+		setKri_reason_for_collection("");
+		setKri_status(false);
+		setKri_upper_bound(0.0);
+	}
+	
 	public String toString() {
 		return "KRI: " + 
 				"\n\tKRI_Code: " + this.getKri_code() + 

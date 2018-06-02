@@ -6,8 +6,8 @@ import javax.faces.context.FacesContext;
 
 public class MessengerUtil {
 
-	public void addMessage(Severity msg, String summary, String details) {
-		FacesMessage message = new FacesMessage(msg,summary, details);
+	public void addMessage(Severity msgType, String summary, String title) {
+		FacesMessage message = new FacesMessage(msgType,summary, title);
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }
