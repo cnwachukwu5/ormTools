@@ -121,6 +121,7 @@ public class KRI_Value implements Serializable{
 	public void setQuarter(String quarter) {
 		this.quarter = quarter;
 	}
+	
 
 	public String toString() {
 		return "KRIValue: " + 
