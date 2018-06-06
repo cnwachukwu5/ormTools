@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,6 +17,7 @@ import com.appslabtest.ormtools.model.KRI_Value;
 import com.appslabtest.ormtools.model.Month;
 import com.appslabtest.ormtools.model.User;
 import com.appslabtest.ormtools.utilities.MessengerUtil;
+import com.appslabtest.ormtools.utilities.DateUtils;
 
 
 @SessionScope
@@ -28,10 +29,10 @@ public class KriValueBean implements Serializable{
 	KRI_ValueService kri_ValueService;
 	
 	@Autowired
-	KriBean kri;
+	KriBean kriBean;
 	
 	@Autowired
-	UserBean user;
+	UserBean userBean;
 	
 	private int id;
 	private KRI kri_code;
@@ -42,20 +43,21 @@ public class KriValueBean implements Serializable{
 	private User valueSubmittedBy;
 	private String kri_value_justification;
 	private String quarter;
+	private MessengerUtil messengerUtil = new MessengerUtil();
 	
 	private KRI_Value kri_Value2 = new KRI_Value();
 	
-	public KriBean getKri() {
-		return kri;
+	public KriBean getKriBean() {
+		return kriBean;
 	}
-	public void setKri(KriBean kri) {
-		this.kri = kri;
+	public void setKriBean(KriBean kriBean) {
+		this.kriBean = kriBean;
 	}
-	public UserBean getUser() {
-		return user;
+	public UserBean getUserBean() {
+		return userBean;
 	}
-	public void setUser(UserBean user) {
-		this.user = user;
+	public void setUser(UserBean userBean) {
+		this.userBean = userBean;
 	}
 	public KRI_Value getKri_Value2() {
 		return kri_Value2;
@@ -126,14 +128,25 @@ public class KriValueBean implements Serializable{
 	
 	public void addValue() {
 		KRI_Value newKRIValue = new KRI_Value();
+		DateUtils current = new DateUtils();
 		try {
-			newKRIValue.setKri_code(kri.getKri());
+			newKRIValue.setKri_code(kriBean.getKri());
 			newKRIValue.setKri_value(kri_Value2.getKri_value());
 			newKRIValue.setKri_value_justification(kri_Value2.getKri_value_justification());
-			newKRIValue.setKri_value_month(kri_value_month);
+			newKRIValue.setKri_value_month(kri_Value2.getKri_value_month());
+			newKRIValue.setKri_value_year(current.currentYear());
+			newKRIValue.setTimeSubmitted(current.currentTimeStamp());
+			newKRIValue.setValueSubmittedBy(userBean.getUser());
+			newKRIValue.setKri_value_justification(kri_Value2.getKri_value_justification());
+			newKRIValue.setQuarter(current.currentQuarter());
+			
+			getKri_ValueService().addKRIValue(newKRIValue);
+			messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI value added succesfully", "Add new KRI value");
 			
 		}catch(DataAccessException accessException) {
-			
+			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + accessException.getMessage(), "KRI value creation Error");
 		}
-	}
+	}//End of addValue method
+	
+	
 }

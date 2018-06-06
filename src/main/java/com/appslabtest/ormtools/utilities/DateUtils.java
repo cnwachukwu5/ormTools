@@ -1,5 +1,6 @@
 package com.appslabtest.ormtools.utilities;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class DateUtils {
@@ -52,6 +53,14 @@ public class DateUtils {
 		}
 		
 		return currentQuarter;
+	}
+	
+	public String currentYear() {
+		return "" + getCurrentCalendarInstance().get(Calendar.YEAR);
+	}
+	
+	public Timestamp currentTimeStamp() {
+		return new Timestamp(System.currentTimeMillis());
 	}
 
 }
