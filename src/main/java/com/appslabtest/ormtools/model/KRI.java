@@ -37,7 +37,7 @@ public class KRI implements Serializable{
 	@JoinColumn(name="kri_owner_dept")
 	private Department kri_owner_dept;
 	
-	@Column(name="kri_status", nullable=false)
+	@Column(name="kri_status", columnDefinition = "BIT", nullable=false)
 	private boolean kri_status;
 	
 	@Column(name="kri_deactivate_reason")

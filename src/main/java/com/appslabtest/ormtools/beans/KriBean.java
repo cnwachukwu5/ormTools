@@ -14,6 +14,7 @@ import com.appslabtest.ormtools.model.KRI;
 import com.appslabtest.ormtools.model.Department;
 import com.appslabtest.ormtools.service.KRIService;
 import com.appslabtest.ormtools.utilities.MessengerUtil;
+import com.appslabtest.ormtools.utilities.IDGen;
 
 
 @SessionScope
@@ -103,7 +104,8 @@ public class KriBean implements Serializable {
 		 */
 		try {
 			KRI newKRI = new KRI();
-			newKRI.setKri_code(kri.getKri_code());
+			String kriID = new IDGen().getGeneratedID(kri.getKri_owner_dept().getDept_name());
+			newKRI.setKri_code(kriID);
 			newKRI.setKri_desc(kri.getKri_desc());
 			newKRI.setKri_reason_for_collection(kri.getKri_reason_for_collection());
 			newKRI.setKri_lower_bound(kri.getKri_lower_bound());

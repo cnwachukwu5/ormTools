@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+			<span style="font-weight: bold; font-size: 20px">KRI Manager</span><p:separator/><p:spacer/>
+				<div id="addKRI">
+				<ul class="nav nav-tabs" style="margin-right:10px;font-size:14px">
+						<li class="active" style="margin-right:10px"><a data-toggle="pill" href="#addSingle" style="">Add Single KRI</a></li>
+						<li style="margin-right:10px"><a data-toggle="pill" href="#batchUpload">Batch Upload</a></li>
+				</ul>
+				
+					
+					<div class="tab-content">
+						<div id="addSingle" class="tab-pane fade in active">
+							<div style="margin-top:2%; margin-left: 2%">
+								<h4>Add KRI for a department</h4>
+								<div style="align: center">
+									
+								</div>
+							</div>
+								
+							
+						</div>
+						<div id="batchUpload" class="tab-pane fade">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						</div>
+					</div>
+				</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
