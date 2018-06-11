@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.event.ValueChangeEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -190,6 +191,12 @@ public class KriBean implements Serializable {
 			return null;
 		}else {
 			return allKRIs;
+		}
+	}
+	
+	public void checkThresholdValues(ValueChangeEvent e) {
+		if(kri_lower_bound > kri_upper_bound) {
+			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
 		}
 	}
 
