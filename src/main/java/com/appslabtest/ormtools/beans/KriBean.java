@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class KriBean implements Serializable {
 	private String kri_deactivate_reason;
 	private KRI kri = new KRI();
 	private MessengerUtil messengerUtil = new MessengerUtil();
+	private boolean isValidated = false;
 	
 	public KRIService getKriService() {
 		return kriService;
@@ -103,24 +105,29 @@ public class KriBean implements Serializable {
 		/*
 		 * This method adds a new KRI to the KRI table
 		 */
-		try {
-			KRI newKRI = new KRI();
-			String kriID = new IDGen().getGeneratedID(kri.getKri_owner_dept().getDept_name());
-			newKRI.setKri_code(kriID);
-			newKRI.setKri_desc(kri.getKri_desc());
-			newKRI.setKri_reason_for_collection(kri.getKri_reason_for_collection());
-			newKRI.setKri_lower_bound(kri.getKri_lower_bound());
-			newKRI.setKri_upper_bound(kri.getKri_upper_bound());
-			newKRI.setKri_owner_dept(kri.getKri_owner_dept());
-			newKRI.setKri_status(kri.isKri_status());
-			newKRI.setKri_deactivate_reason("");
-			
-			getKriService().addKRI(newKRI);
-			messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI created succesfully", "Add new KRI");
-			kri.reset();
-		}catch(DataAccessException dataAccessException) {
-			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + dataAccessException.getMessage(), "KRI creation Error");
-		}
+		if(isValidated) {
+			 try {
+					KRI newKRI = new KRI();
+					String kriID = new IDGen().getGeneratedID(kri.getKri_owner_dept().getDept_name());
+					newKRI.setKri_code(kriID);
+					newKRI.setKri_desc(kri.getKri_desc());
+					newKRI.setKri_reason_for_collection(kri.getKri_reason_for_collection());
+					newKRI.setKri_lower_bound(kri.getKri_lower_bound());
+					newKRI.setKri_upper_bound(kri.getKri_upper_bound());
+					newKRI.setKri_owner_dept(kri.getKri_owner_dept());
+					newKRI.setKri_status(kri.isKri_status());
+					newKRI.setKri_deactivate_reason("");
+					
+					getKriService().addKRI(newKRI);
+					messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI created succesfully", "Add new KRI");
+					kri.reset();
+				}catch(DataAccessException dataAccessException) {
+					messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + dataAccessException.getMessage(), "KRI creation Error");
+				}
+		 }else {
+			 messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
+		 }
+		
 	}//End of addKRI
 	
 	public void checkKRI() {
@@ -194,9 +201,14 @@ public class KriBean implements Serializable {
 		}
 	}
 	
-	public void checkThresholdValues(ValueChangeEvent e) {
-		if(kri_lower_bound > kri_upper_bound) {
+	public void checkThresholdValues() {
+		
+		if(kri.getKri_lower_bound() > kri.getKri_upper_bound()) {
+			
 			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
+			isValidated = false;
+		}else {
+			isValidated = true;
 		}
 	}
 

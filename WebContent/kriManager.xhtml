@@ -14,22 +14,24 @@
 	<style>
 		body{
 		background-color: #f5f5f5;
+		height: 100%;
+		overflow: auto;
 		}
 	</style>
 </h:head>
 <h:body>
 	<ui:composition template="/template/layout.xhtml">
 		<ui:define name="content">
-			<span style="font-weight: bold; font-size: 20px">KRI Manager</span><p:separator/><p:spacer/>
+			<span style="font-weight: bold; font-size: 20px">KRI Manager</span><p:separator/>
 			<p:tabView id="tabView1">
 				<p:tab id="tab1" title="Add new KRI">
-				<h4>Add KRI for a department</h4>
+				<h5>Add KRI for a department</h5>
 					<h:form id="add" style="margin-left:10%">
 						<p:messages id="messages" closable="true"/>			
     					<h:panelGrid columns="4" cellpadding="10" cellspacing="3">
-    						<p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
     						
-    						<p:spacer width="20" height="33"/>
+    						
+    						<p:spacer width="20" height="0"/>
     						<p:outputLabel for="departments" value="Department: "/>
     						<p:spacer width="20"/>
     						<p:selectOneMenu id="departments" value="#{kriBean.kri.kri_owner_dept}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
@@ -38,25 +40,25 @@
     						</p:selectOneMenu>
     						
     							
-    						<p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="33"/>
+    						<p:spacer width="20" height="10"/><p:spacer width="20" height="10"/><p:spacer width="20" height="10"/><p:spacer width="20" height="10"/>
     						
     						<p:spacer width="20" height="33"/>
     						<p:outputLabel for="kriname" value="KRI Name: "/>
     						<p:spacer width="20"/>
-    						<p:inputText size="50" id="kriname" value="#{kriBean.kri.kri_desc}" label="KRIName" required="true" requiredMessage="KRI Name required" validatorMessage="Only letters (A-Z, a-z) allowed in this fields">
-    							<f:validateRegex pattern="^[A-Z][a-zA-Z]+"/>
+    						<p:inputText size="50" id="kriname" value="#{kriBean.kri.kri_desc}" label="KRIName" required="true" requiredMessage="KRI Name required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"/>
     						</p:inputText>	
     						
     						    						
-    						<p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="33"/>
+    						<p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/>
     						
     						<p:spacer width="20" height="33"/>
     						<p:outputLabel for="kriReason" value="Reason for collection: "/>
     						<p:spacer width="20"/>
-    						<p:inputTextarea id="kriReason" rows="5" cols="50" value="#{kriBean.kri.kri_reason_for_collection}" counter="display" maxlength="150" counterTemplate="{0} characters remaining"/>
+    						<p:inputTextarea id="kriReason" rows="4" cols="50" value="#{kriBean.kri.kri_reason_for_collection}" counter="display" maxlength="150" counterTemplate="{0} characters remaining" required="true" requiredMessage="Value required"/>
     						<p:spacer width="20" height="0"/><p:spacer width="20" height="0"/><p:spacer width="20" height="0"/><h:outputText id="display" />
     						
-    						<p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="33"/>
+    						<p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/>
     						
     						<p:spacer width="20" height="33"/>
     						<p:outputLabel for="krithreshold" value="KRI thresholds: "/>
@@ -67,23 +69,22 @@
     								<p:spacer width="20" height="0"/>
     								<p:inputText id="lowThreshold" value="#{kriBean.kri.kri_lower_bound}" label="lower threshold" required="true" requiredMessage="Value required" validatorMessage="Only numbers allowed" valueChangeListener="#{kriBean.checkThresholdValues}" onchange="submit()" converter="javax.faces.Double" size="5">
     									<f:validateDoubleRange minimum="0.0" maximum="1000000.0"/>
-   										<p:ajax update="lowmsg" event="keyup"/>
     								</p:inputText>
     								<p:message for="lowThreshold" id="lowmsg"/>
     								
-    								<p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="33"/>
+    								<p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/>
     								
     								<p:outputLabel for="upperThreshold" value="Upper threshold: "/>
     								<p:spacer width="20" height="0"/>
     								<p:inputText id="upperThreshold" value="#{kriBean.kri.kri_upper_bound}" label="upper threshold" required="true" requiredMessage="Value required" validatorMessage="Only numbers allowed" valueChangeListener="#{kriBean.checkThresholdValues}" onchange="submit()" converter="javax.faces.Double" size="5">
     									<f:validateDoubleRange minimum="0.0" maximum="1000000.0"/>
-   										<p:ajax update="upmsg" event="keyup"/>
+    									<p:ajax listener="#{kriBean.checkThresholdValues()}" event="blur" update="messages"/>
     								</p:inputText>
     								<p:message for="upperThreshold" id="upmsg"/>
     							</h:panelGrid>
     						</p:fieldset>
     						
-    						<p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="20"/><p:spacer width="20" height="33"/>
+    						<p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/><p:spacer width="20" height="12"/>
     						
     						<p:spacer width="20" height="33"/>
     						<p:outputLabel for="status" value="Is active: "/>
@@ -91,7 +92,13 @@
 							<p:selectBooleanCheckbox id="status" value="#{kriBean.kri.kri_status}" />
 							
     					</h:panelGrid>
-										
+    					<p:spacer width="200" height="40"/><p:spacer width="0" height="40"/>
+    					<p:commandButton id="inputKRI" styleClass="inputKRI" value="Add new KRI" actionListener="#{kriBean.addKRI()}" update="messages" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:blockUI block="add" trigger="inputKRI">
+    						Please wait: Adding KRI<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    					</p:blockUI>
+								<p:spacer width="200" height="40"/>		
 					</h:form>
 				</p:tab>
 			</p:tabView>
