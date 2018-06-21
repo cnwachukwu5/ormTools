@@ -108,14 +108,15 @@ public class KRI implements Serializable{
 	}
 	
 	public void reset() {
-		setKri_code("");
-		setKri_deactivate_reason("");
-		setKri_desc("");
-		setKri_lower_bound(0.0);
-		setKri_owner_dept(null);
-		setKri_reason_for_collection("");
-		setKri_status(false);
-		setKri_upper_bound(0.0);
+		System.out.println("Invoked ... in model");
+		this.setKri_code("");
+		this.setKri_deactivate_reason("");
+		this.setKri_desc("");
+		this.setKri_lower_bound(0.0);
+		this.setKri_owner_dept(null);
+		this.setKri_reason_for_collection("");
+		this.setKri_status(false);
+		this.setKri_upper_bound(0.0);
 	}
 	
 	public String toString() {

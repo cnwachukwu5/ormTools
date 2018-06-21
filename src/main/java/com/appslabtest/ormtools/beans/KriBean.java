@@ -118,8 +118,9 @@ public class KriBean implements Serializable {
 					newKRI.setKri_deactivate_reason("");
 					
 					getKriService().addKRI(newKRI);
+					reset();
 					messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI created succesfully", "Add new KRI");
-					kri.reset();
+					
 				}catch(DataAccessException dataAccessException) {
 					messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + dataAccessException.getMessage(), "KRI creation Error");
 				}
@@ -128,6 +129,11 @@ public class KriBean implements Serializable {
 		 }
 		
 	}//End of addKRI
+	
+	public void reset() {
+		System.out.println("Invoked ... in Bean");
+		this.kri.reset();
+	}
 	
 	public void checkKRI() {
 		try {

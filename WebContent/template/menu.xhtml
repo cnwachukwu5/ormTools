@@ -8,27 +8,62 @@
 </head>
 <h:body>
 	<ui:composition>
+		<h:outputStylesheet library="css" name="layout.css"  />
 		<h:form>
-			<ul class="menu">
+			<div class="main-nav">
+				<ul class="main-nav-ul">
+					<li><a href="/ormTools/main.xhtml">Home</a></li>
+					<li class="has-sub"><p:commandLink disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
+											<span class="hasSub">
+												<h:outputText value="User Manager" />
+											</span><span class="sub-arrow"></span>
+										</p:commandLink>
+						<ul>
+							<li>
+								<p:commandLink action="#{navigationBean.gotoCreateUserPage()}">
+									<h:outputText value="Create User" />
+								</p:commandLink>
+							</li>
+							<li><a href="#">Update User</a></li>
+							<li><a href="#">Delete User</a></li>
+						</ul>
+					</li>
+					<li class="has-sub"><a href="#"><span class="hasSub">KRI Manager</span><span class="sub-arrow"></span></a>
+						<ul>
+							<li class="has-sub"><a href="#"><span class="hasSub">Add KRI</span><span class="sub-arrow"></span></a>
+								<ul>
+									<li><a href="#"><span class="sub-sub">Add one KRI</span></a></li>
+									<li><a href="#"><span class="sub-sub">Batch upload</span></a></li>
+								</ul>
+							</li>
+							<li><a href="#">Update KRI</a></li>
+							<li><a href="#">Delete KRI</a></li>
+							<li><a href="#">Submit KRI value</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Incident Register</a></li>	
+					<li><a href="#">Reports</a></li>
+				</ul>
+			</div>
+
+		
+			<!-- <ul class="menu">
 				<li>
 					<p:commandLink class="menulist">
 						<h:outputText value="Menu"/> 
 					</p:commandLink>
 				</li>
-				<li>
-					<p:commandLink class="menulist" action="#{userBean.showUserManager()}" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
-						<h:outputText value="User Manager" /> 
-					</p:commandLink>
-				</li>
+				
 				<li>
 					<div class="dropdown" style="padding:0;margin:0">
 						
-						<a class="dropbtn">KRI Manager</a>
+						<a id="krimanager" class="dropbtn">KRI Manager</a>
+						
 						<div class="dropdown-content">
-							<a href="kriManager.xhtml">Add KRI</a>
-							<a href="kriManager.xhtml">Update KRI</a>
-							<a href="kriManager.xhtml">Delete KRI</a>
-							<a href="kriManager.xhtml">Report KRI Value</a>
+							<a id="add">Add KRI</a>
+							<a id="update">Update KRI</a>
+							<a id="delete">Delete KRI</a>
+							<a id="submit">Submit KRI Value</a>
 						</div>
 					</div>
 					
@@ -44,6 +79,7 @@
 					</p:commandLink>
 				</li>
 			</ul>
+			 -->
 		</h:form>
 	</ui:composition>
 </h:body>

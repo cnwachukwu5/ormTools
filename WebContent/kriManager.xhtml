@@ -8,8 +8,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>    
 	<title>Operational Risk Management Tools</title>
 	<style>
 		body{
@@ -23,7 +22,7 @@
 	<ui:composition template="/template/layout.xhtml">
 		<ui:define name="content">
 			<span style="font-weight: bold; font-size: 20px">KRI Manager</span><p:separator/>
-			
+				<div id="addKRI" style="width: 80%">
 				<h5>Add KRI for a department</h5>
 					<h:form id="add" style="margin-left:10%">
 						<p:messages id="messages" closable="true"/>			
@@ -99,9 +98,17 @@
     					</p:blockUI>
 								<p:spacer width="200" height="40"/>			
 					</h:form>
-				
+				</div>
+				<div id="updateKRI" style="width: 80%; background-color:blue">
+					Update DIV
+				</div>
+				<div id="deleteKRI" style="width: 80%; background-color:green">
+					Delete DIV
+				</div>
+				<div id="submitKRI" style="width: 80%; background-color:yellow">
+					Submit
+				</div>
 		</ui:define>
 	</ui:composition>
-
 </h:body>
 </html>
