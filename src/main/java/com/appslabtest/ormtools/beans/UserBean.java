@@ -125,17 +125,18 @@ public class UserBean implements Serializable {
 
 	public String validateUser() {
 		loggeduser = getUserService().findUser(user);
-		//System.out.println("User role is: " + loggeduser.getRole().getRole());
+		
 		if(loggeduser != null) {
 			if(loggeduser.getPwd().equals(user.getPwd())) {
-				return "/main";
+				
+				return "/main.xhtml?faces-redirect=true";
 			}else {
-				//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid user credentials!", "Login"));
+				
 				addMessage(FacesMessage.SEVERITY_ERROR, "Invalid user credentials!","Login");
 				return "";
 			}
 		}else {
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!", "Login"));
+			
 			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist!","Login");
 			return "";
 		}
@@ -213,7 +214,8 @@ public class UserBean implements Serializable {
     }
 	
 	public String logout() {
-		return "index";
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/index?faces-redirect=true";
 	}
 	
 	public String showUserManager() {
