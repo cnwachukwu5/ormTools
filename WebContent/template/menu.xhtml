@@ -21,7 +21,11 @@
 									<h:outputText value="Create User" />
 								</p:commandLink>
 							</li>
-							<li><a href="#">Update User</a></li>
+							<li>
+								<p:commandLink action="#{navigationBean.gotoUpdateUserPage()}">
+									<h:outputText value="Update User" />
+								</p:commandLink>	
+							</li>
 							<li><a href="#">Delete User</a></li>
 						</ul>
 					</li>

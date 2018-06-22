@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="stylemenu.css"/>
+			<span style="font-weight: bold; font-size: 20px">User Manager</span><p:separator/>
+			<div class="userManager" style=" ">
+				<h4 style="margin-left: 1%">Update User</h4>
+				<h:form id="updateForm">
+    					<p:messages id="messages" closable="true"/>
+    					<div id="searchUserToUpdate">
+    					<p:fieldset >
+    					<h:panelGrid columns="6" cellpadding="10" cellspacing="3">
+    						<p:spacer width="60"/> 
+    						<h:outputText value="Enter username to update: "/> <p:spacer width="20"/>
+    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:commandButton id="searchUser" value="Search User" actionListener="#{userBean.checkUser()}" update="form4"/>
+    						<p:blockUI block="updateForm" trigger="searchUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    					</h:panelGrid>
+    					</p:fieldset>
+    					</div>
+    				</h:form>	
+    				<p:spacer width="100" height="50"/> 
+    				<h:form id="form4">	
+    					<h:panelGrid columns="4" cellpadding="10" cellspacing="3">
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="firstname" value="Firstname: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="firstname" value="#{userBean.user.firstname}" label="Firstname" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="lastname" value="Lastname: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="lastname" value="#{userBean.user.lastname}" label="Lastname" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="email" value="Email: "/>
+    						<p:spacer width="20"/>
+    						<p:inputText id="email" value="#{userBean.user.email}" label="Email" disabled="true" size="50"/>
+    						
+    						<p:spacer width="100"/> 
+    						<p:outputLabel for="role" value="Role: "/>
+    						<p:spacer width="20"/>
+    						<p:selectOneMenu id="role" value="#{userBean.user.role}" style="width:170px" required="true" requiredMessage="Role required" converter="selectOneMenuConverter">
+    							<f:selectItem itemLabel="Select user role" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{roleBean.roles}" var="role" itemLabel="#{role.role}" itemValue="#{role}" />
+    						</p:selectOneMenu>
+    						
+    						<p:spacer width="100" height="50"/> 
+    						<p:outputLabel for="departments" value="Department: "/>
+    						<p:spacer width="20"/>
+    						<p:selectOneMenu id="departments" value="#{userBean.user.department}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
+    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
+    						</p:selectOneMenu>    						
+    					</h:panelGrid><br/>
+    					<p:spacer width="200" height="30"/>
+    					<p:commandButton id="updateUser" value="Update User" actionListener="#{userBean.updateUser()}" update="updateForm" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:blockUI block="form4" trigger="updateUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    				</h:form>	
+			</div>
+		</ui:define>
+	
+	</ui:composition>
+</h:body>
+</html>

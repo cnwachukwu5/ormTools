@@ -15,5 +15,9 @@ public class NavigationBean implements Serializable{
 	public String gotoCreateUserPage() {
 		return "/user/createuser.xhtml?faces-redirect=true";
 	}
+	
+	public String gotoUpdateUserPage() {
+		return "/user/updateuser.xhtml?faces-redirect=true";
+	}
 
 }
