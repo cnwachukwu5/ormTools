@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:h="http://java.sun.com/jsf/html" 
 	xmlns:f="http://java.sun.com/jsf/core" 
@@ -18,6 +18,88 @@
 			<span style="font-weight: bold; font-size: 20px">User Manager</span><p:separator/>
 			<div class="createUser" style=" ">
 				<h4 style="margin-left: 1%">Create User</h4>
+				<h:form id="form1">
+    					<p:messages id="messages" closable="true"/>
+    					<h:panelGrid columns="5" cellpadding="10" cellspacing="3">
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						<p:outputLabel for="firstname" value="Firstname: "/><p:spacer width="20"/>
+    						<p:inputText size="50" id="firstname" value="#{userBean.user.firstname}" label="Firstname" required="true" requiredMessage="Firstname required" validatorMessage="Only letters (A-Z, a-z) allowed in this fields">
+    							<f:validateRegex pattern="^[A-Z][a-zA-Z]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:message for="firstname" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="lastname" value="Lastname: "/><p:spacer width="20"/>
+    						<p:inputText size="50" id="lastname" value="#{userBean.user.lastname}" label="Lastname" required="true" requiredMessage="Lastname required" validatorMessage="Only letters (A-Z, a-z) allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-z]+([ '-][a-zA-Z]+)*" />
+    						</p:inputText><p:spacer width="20"/>
+    						<p:message for="lastname" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="username" value="Username: "/><p:spacer width="20"/>
+    						<p:inputText size="50" id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:message for="username" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="password" value="Password: "/><p:spacer width="20"/>
+    						<p:password size="50" id="password" value="#{userBean.user.pwd}" label="Password" required="true" requiredMessage="Password required" /><p:spacer width="20"/>
+    						<p:message for="password" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="email" value="Email: "/><p:spacer width="20"/>
+    						<p:inputText size="50" id="email" value="#{userBean.user.email}" label="email" required="true" requiredMessage="Email required" validatorMessage="Invalid email format">
+    							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+    						</p:inputText><p:spacer width="20"/>
+    						<p:message for="email" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="role" value="Role: "/><p:spacer width="20"/>
+    						<p:selectOneMenu id="role" value="#{userBean.user.role}" style="width:170px" required="true" requiredMessage="Role required" converter="selectOneMenuConverter">
+    							<f:selectItem itemLabel="Select user role" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{roleBean.roles}" var="role" itemLabel="#{role.role}" itemValue="#{role}" />
+    						</p:selectOneMenu><p:spacer width="20"/>
+    						<p:message for="role" display="text"/>
+    						<p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/> <p:spacer width="20" height="33"/><p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+    						
+    						<p:outputLabel for="departments" value="Department: "/><p:spacer width="20"/>
+    						<p:selectOneMenu id="departments" value="#{userBean.user.department}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
+    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
+    						</p:selectOneMenu><p:spacer width="20"/>
+    						<p:commandLink class="btn btn-default" onclick="PF('departmentdlg').show();">
+    							<h:outputText value="Add department"/>
+    						</p:commandLink>
+    						<p:spacer width="20" height="32"/> <p:spacer width="20" height="32"/> <p:spacer width="20" height="32"/><p:spacer width="20" height="32"/><p:spacer width="20" height="32"/>
+    						
+    					</h:panelGrid><br/>
+    					<p:spacer width="90" height="30"/>
+    					<p:commandButton value="Create User" actionListener="#{userBean.addUser()}" update="form1" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:spacer width="70" height="30"/>
+    					<p:spacer width="70" height="60"/>
+    				</h:form>
+    				
+    				<p:dialog id="dlg2" header="Add Department" widgetVar="departmentdlg" height="150" width="420" resizable="false" position="center" draggable="false" closable="false" responsive="true" onShow="PF('departmentdlg').initPosition()">
+    		<h:form id="form2">
+    			<p:messages id="messages" closable="true"/>
+    			<h:panelGrid columns="4" cellpadding="10" cellspacing="3">
+    				<p:spacer width="20" height="20"/> <p:spacer width="20" height="20"/><p:spacer width="20" height="20"/> <p:spacer width="20" height="20"/>
+    				
+    				<p:spacer width="30"/><p:outputLabel for="department" value="Department:"/> <p:spacer width="20"/>
+    				<p:inputText id="department" value="#{departmentBean.department.dept_name}" required="true"/>
+    				
+    				
+    				<p:spacer width="20"/> <p:spacer width="20"/>
+    				
+    			</h:panelGrid>
+    			<p:spacer width="50"/>
+    			<p:commandButton id="addDepartment" value="Add Department" actionListener="#{departmentBean.addDepartment(departmentBean.department)}" update="messages"/>  				
+    				<p:commandButton style="margin-left:10%" value="Cancel" oncomplete="PF('departmentdlg').hide();">
+    					 <p:ajax update="form1:departments" listener="#{departmentBean.allDepartments()}"/>
+    				</p:commandButton>
+    		</h:form>
+    	</p:dialog> 
 			</div>	
 		</ui:define>
 	</ui:composition>
