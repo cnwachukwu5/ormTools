@@ -19,5 +19,16 @@ public class NavigationBean implements Serializable{
 	public String gotoUpdateUserPage() {
 		return "/user/updateuser.xhtml?faces-redirect=true";
 	}
+	
+	public String gotoDeleteUserPage() {
+		return "/user/deleteuser.xhtml?faces-redirect=true";
+	}
+	
+	public String gotoaddKRISinglePage() {
+		return "/kri/addsinglekri.xhtml?faces-redirect=true";
+	}
+	public String gotoaddKRIBatchPage() {
+		return "/kri/addkribatch.xhtml?faces-redirect=true";
+	}
 
 }

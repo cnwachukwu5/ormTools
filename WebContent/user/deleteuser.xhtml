@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="stylemenu.css"/>
+			<span style="font-weight: bold; font-size: 20px">User Manager</span><p:separator/>
+			<div class="userManager" style=" ">
+				<h4 style="margin-left: 1%">Delete User</h4>
+				<h:form id="form5">
+						<p:spacer height="50"/>
+    					<p:messages id="messages" closable="true"/>
+    					<h:panelGrid columns="6" cellpadding="10" cellspacing="3">
+    						<p:spacer width="100"/> 
+    						<h:outputText value="Enter username to delete: "/> <p:spacer width="20"/>
+    						<p:inputText id="username" value="#{userBean.user.username}" label="username" required="true" requiredMessage="Username is required" validatorMessage="Only letters and number allowed in this field">
+    							<f:validateRegex pattern="^[a-zA-Z0-9]+"/>
+    						</p:inputText><p:spacer width="20"/>
+    						<p:commandButton id="deleteUser" value="Delete User" actionListener="#{userBean.deleteUser()}" update="form5">
+    							<p:confirm header="Confirmation" message="This operation will deactivate the user. Do you want to continue?" icon="ui-icon-alert"/>
+    						</p:commandButton>
+    						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+    							<p:spacer width="50" /><p:spacer width="50" /><p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" /><p:spacer width="30" />
+    							<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    						</p:confirmDialog>
+    						<p:blockUI block="form5" trigger="deleteUser">
+    							LOADING<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    						</p:blockUI>
+    					</h:panelGrid>
+    				</h:form>	
+			</div>	
+		</ui:define>
+	</ui:composition>		
+</h:body>
+</html>

@@ -187,7 +187,7 @@ public class UserBean implements Serializable {
 	
 	public void updateUser() throws Exception {
 		
-		if(user == null) {
+		if(user.getFirstname() == null) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist.","Update");
 		}else {
 			getUserService().updateUser(user);
@@ -198,8 +198,8 @@ public class UserBean implements Serializable {
 	}
 	
 	public void deleteUser() throws Exception {
-		
-		if(user == null) {
+		System.out.println("User: " + user);
+		if(user.getFirstname() == null) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist.","Delete");
 		}else {
 			getUserService().deleteUser(user);

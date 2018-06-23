@@ -26,15 +26,27 @@
 									<h:outputText value="Update User" />
 								</p:commandLink>	
 							</li>
-							<li><a href="#">Delete User</a></li>
+							<li>
+								<p:commandLink action="#{navigationBean.gotoDeleteUserPage()}">
+									<h:outputText value="Delete User" />
+								</p:commandLink>								
+							</li>
 						</ul>
 					</li>
 					<li class="has-sub"><a href="#"><span class="hasSub">KRI Manager</span><span class="sub-arrow"></span></a>
 						<ul>
-							<li class="has-sub"><a href="#"><span class="hasSub">Add KRI</span><span class="sub-arrow"></span></a>
+							<li class="has-sub innerUl" style="background-color: #e94f31;"><a href="#" style="background-color: #e94f31; color: #FFFFFF"><span class="hasSub">Add KRI</span><span class="sub-arrow"></span></a>
 								<ul>
-									<li><a href="#"><span class="sub-sub">Add one KRI</span></a></li>
-									<li><a href="#"><span class="sub-sub">Batch upload</span></a></li>
+									<li>
+										<p:commandLink action="#{navigationBean.gotoaddKRISinglePage()}">
+											<span class="sub-sub"> <h:outputText value="Add one KRI"/> </span>
+										</p:commandLink>	
+									</li>
+									<li>
+										<p:commandLink action="#{navigationBean.gotoaddKRIBatchPage()}">
+											<span class="sub-sub"><h:outputText value="Add multiple KRIs"/></span>
+										</p:commandLink>
+									</li>
 								</ul>
 							</li>
 							<li><a href="#">Update KRI</a></li>
