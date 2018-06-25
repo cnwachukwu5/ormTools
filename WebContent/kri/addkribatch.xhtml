@@ -20,6 +20,36 @@
 				<h4 style="margin-left: 1%">Add KRI - Batch upload</h4>
 				<p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
 				
+				<div id="downloadKRITemplate">
+					<p:dialog modal="true" widgetVar="statusDialog" header="Downloading" draggable="false" closable="false" resizable="false">
+						<p:graphicImage url="/images/status1.jpg"/>
+					</p:dialog>
+					<h:form>
+						
+						<p:commandButton value="Download Template" ajax="false" icon="ui-icon-arrowthick-1-s" onclick="PrimeFaces.monitorDownload(start, stop);" style="padding: 0.5% 5%; margin-top:1%">
+							<p:fileDownload value="#{fileDownloadBean.file}" />
+						</p:commandButton>
+							<p:spacer width="20"/>
+						<p:outputLabel value="Use the template to create batch KRIs file to upload"/>
+					</h:form>
+					<script type="text/javascript">
+						function start(){
+							PF('statusDialog').show();
+						}
+						
+						function stop(){
+							PF('statusDialog').hide();
+						}
+					</script>
+				</div>
+				
+				<div id="uploadKRiTemplate" style="margin-top: 8%">
+					<h:form enctype="multipart/form-data">
+						<p:messages id="messages" closable="true"/>
+						<p:outputLabel value="Click on the 'Choose' button to select KRI upload file"/>
+						<p:fileUpload value="#{fileUploadBean.file}" fileUploadListener="#{fileUploadBean.handleKRIUpload}" mode="advanced" dragDropSupport="false" update="messages" sizeLimit="500000" fileLimit="1" allowTypes="/(\.|\/)(xls)$/" invalidSizeMessage="Selected file larger than 500kb" fileLimitMessage="Only one file can be uploaded ..." />
+					</h:form>
+				</div>
 			</div>	
 		</ui:define>
 	</ui:composition>	
