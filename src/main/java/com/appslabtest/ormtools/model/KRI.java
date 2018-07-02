@@ -1,7 +1,8 @@
 package com.appslabtest.ormtools.model;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class KRI implements Serializable{
 	@Column(name="kri_upper_bound", nullable=false)
 	private double kri_upper_bound;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="kri_owner_dept")
 	private Department kri_owner_dept;
 	

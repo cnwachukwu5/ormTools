@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.appslabtest.ormtools.model.KRI;
 import com.appslabtest.ormtools.model.Department;
+import com.appslabtest.ormtools.service.DepartmentService;
 import com.appslabtest.ormtools.service.KRIService;
 import com.appslabtest.ormtools.utilities.MessengerUtil;
 import com.appslabtest.ormtools.utilities.IDGen;
@@ -27,6 +28,9 @@ public class KriBean implements Serializable {
 	@Autowired
 	KRIService kriService;
 	
+	@Autowired
+	DepartmentService departmentService;
+	
 	private String kri_code;
 	private String kri_desc;
 	private String kri_reason_for_collection;
@@ -39,6 +43,12 @@ public class KriBean implements Serializable {
 	private MessengerUtil messengerUtil = new MessengerUtil();
 	private boolean isValidated = false;
 	
+	public DepartmentService getDepartmentService() {
+		return departmentService;
+	}
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
 	public KRIService getKriService() {
 		return kriService;
 	}
@@ -135,6 +145,9 @@ public class KriBean implements Serializable {
 		this.kri.reset();
 	}
 	
+	public List<KRI> findOneKRI(String kri_desc) {
+		return getKriService().findKRI(kri_desc);
+	}
 	public void checkKRI() {
 		try {
 			KRI kriExists = getKriService().findKRI(kri.getKri_code(), kri.getKri_owner_dept().getDeptid());
@@ -212,11 +225,25 @@ public class KriBean implements Serializable {
 			System.out.println("Executed");
 			isValidated = false;
 			//messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
-			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "KRI Threshold values","Low threshold bound should not be greater than upper bound...");
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
 			RequestContext.getCurrentInstance().showMessageInDialog(facesMessage);
 		}else {
 			isValidated = true;
 		}
+	}
+	
+	public boolean addBatch(List<KRI> kris) {
+		System.out.println("I started executing");
+		
+		boolean result = false; 
+		
+		System.out.println("Size is: " + kris.size());
+		for(int i = 0; i < kris.size(); i++) {
+			kri = kris.get(i);
+			getKriService().addKRI(kri);			
+		}
+		result = true;
+		return result;
 	}
 
 }

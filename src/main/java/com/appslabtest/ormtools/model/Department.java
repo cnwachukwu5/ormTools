@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name="department")
+@DynamicUpdate
 public class Department implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

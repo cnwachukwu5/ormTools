@@ -25,8 +25,13 @@ public class KRIServiceImpl implements KRIService{
 	@Override
 	@Transactional
 	public KRI findKRI(String kri_code, int dept_id) throws Exception{
-		KRI returnedKRI = kriRepository.findKRI(kri_code, dept_id);
-		return returnedKRI;
+		return kriRepository.findKRI(kri_code, dept_id);
+	}
+	
+	@Override
+	@Transactional
+	public List<KRI> findKRI(String kri_dec) {
+		return kriRepository.findKRI(kri_dec);
 	}
 	
 	@Override

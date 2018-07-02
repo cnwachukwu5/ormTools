@@ -10,6 +10,7 @@ public interface KRIService {
 	 void updateKRI(KRI kri) throws Exception;
 	 void deleteKRI(KRI kri) throws Exception;
 	 KRI findKRI(String kri_code, int dept_id) throws Exception;
+	 List<KRI> findKRI(String kri_dec);
 	 List<KRI> findAllActiveKRI(int dept_id);
 	 List<KRI> findAllKRIs(int dept_id);
 }
