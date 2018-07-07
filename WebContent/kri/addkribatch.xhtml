@@ -19,10 +19,39 @@
 			<div class="kri_manager">
 				<h4 style="margin-left: 1%">Add KRI - Batch upload</h4>
 				<p:spacer width="20" height="33"/><p:spacer width="20" height="33"/>
+				<div class="mainPanel">
+					<h:form>
+					<p:commandLink onclick="PF('dlg2').show();">
+						<span class="iconOption text-center" style="margin-left: 2%;">
+							<span class="glyphicon glyphicon-download icons"></span>
+							<span class="texts">KRI Template</span>	
+						</span>
+					</p:commandLink>
+					</h:form>
+					<h:form>
+						<p:commandLink onclick="PF('dlg3').show();">
+						<span class="iconOption text-center" style="margin-left: 2.5%;">
+							<span class="glyphicon glyphicon-upload icons"></span>
+							<span class="texts">Upload KRIs</span>
+						</span>
+					  	</p:commandLink>
+					</h:form>
+					<h:form id="form4">	
+						<p:commandLink id="rejects" onclick="PF('dlg4').show();" disabled="#{fileUploadBean.isRejectsExists()}">
+							<span class="iconOption text-center" style="margin-left: 3%">
+								<span class="glyphicon glyphicon-download icons"></span>
+								<span class="texts">KRI Rejects</span>
+							</span>
+						</p:commandLink>
+					</h:form>
+				</div>
 				
-				<div class="panel panel-primary" id="downloadKRITemplate">
-					<div class="panel-heading">Download KRI Template</div>
-					<div class="panel-body">
+				<br/> <br/><br/>
+					
+				<!-- Modal forms for the page operations -->
+				<p:dialog header="Download KRI Template" widgetVar="dlg2" height="80" width="660" resizable="false" position="center center" draggable="false">
+    				
+    				<div id="downloadKRITemplate">
 					<p:dialog modal="true" widgetVar="statusDialog" header="Downloading" draggable="false" closable="false" resizable="false">
 						<p:graphicImage url="/images/status1.jpg"/>
 					</p:dialog>
@@ -32,7 +61,8 @@
 							<p:fileDownload value="#{fileDownloadBean.file}" />
 						</p:commandButton>
 							<p:spacer width="20"/>
-						<p:outputLabel value="Use the template to create batch KRIs file for upload" style="margin-left: 5%"/>
+						<p:outputLabel value="Use the template to create batch KRIs file for upload" style="margin-left: 5%; font-size: 10px"/>
+					
 					</h:form>
 					<script type="text/javascript">
 						function start(){
@@ -43,22 +73,65 @@
 							PF('statusDialog').hide();
 						}
 					</script>
-					</div>
 				</div>
-				
-				<div class="panel panel-primary" id="uploadKRiTemplate" style="margin-top: 8%">
-					<div class="panel-heading">Batch Upload KRI</div>
-					<div class="panel-body">
+    				
+				</p:dialog>   
+					
+				<p:dialog header="Upload KRIs" widgetVar="dlg3" height="150" width="700" resizable="false" position="center center" draggable="false">
+					<div id="uploadKRiTemplate" style="margin-top: 4%">
+					
 					<h:form enctype="multipart/form-data">
 						<p:messages id="messages" closable="true"/>
-						<p:outputLabel value="Click on the 'Choose' button to select KRI upload file" style="font-size: 10px"/>
-						<p:fileUpload value="#{fileUploadBean.file}" fileUploadListener="#{fileUploadBean.handleKRIUpload}" mode="advanced" dragDropSupport="false" update="messages" sizeLimit="500000" fileLimit="1" allowTypes="/(\.|\/)(xls)$/" invalidSizeMessage="Selected file larger than 500kb" fileLimitMessage="Only one file can be uploaded ..." style="width:70%;"/>
-						
+						<p:fileUpload value="#{fileUploadBean.file}" fileUploadListener="#{fileUploadBean.handleKRIUpload}" mode="advanced" dragDropSupport="false" update="form4 messages" sizeLimit="500000" fileLimit="1" allowTypes="/(\.|\/)(xls)$/" invalidSizeMessage="Selected file larger than 500kb" fileLimitMessage="Only one file can be uploaded ..." style="width:100%;" oncomplete="enableRejectKRIPanel()"/>
 					</h:form>
-					</div>
+					
+					
 				</div>
+				
+				</p:dialog>
+				
+				<p:dialog header="Download Rejected KRI(s)" widgetVar="dlg4" height="80" width="400" resizable="false" position="center center" draggable="false">
+    				
+    				<div id="downloadRejectedKRI">
+					<p:dialog modal="true" widgetVar="statusDialog" header="Downloading" draggable="false" closable="false" resizable="false">
+						<p:graphicImage url="/images/status1.jpg"/>
+					</p:dialog>
+					<h:form>						
+						<p:commandButton value="Download Rejected KRI" ajax="false" icon="ui-icon-arrowthick-1-s" onclick="PrimeFaces.monitorDownload(start, stop);" style="padding: 0.5% 5%; margin-top:5%;margin-left:15%">
+							<p:fileDownload value="#{fileDownloadBean.file2}" />
+						</p:commandButton>				
+					</h:form>
+					<script type="text/javascript">
+						function start(){
+							PF('statusDialog').show();
+						}
+						
+						function stop(){
+							PF('statusDialog').hide();
+						}
+					</script>
+				</div>
+    				
+				</p:dialog>   
+				
 			</div>	
+			<!--  
+			<h:outputScript>
+			$(document).ready(function(){
+				alert("#{fileUploadBean.isRejectsExists()}");
+			});
+						function enableRejectKRIPanel(){
+							if(#{fileUploadBean.isRejectsExists()}){
+								alert("#{fileUploadBean.isRejectsExists()}");
+								document.getElementById("form4:rejects").removeAttribute("disabled");
+							}else{
+								document.getElementById("form4:rejects").setAttribute("disabled","disabled");
+							}
+						}
+					</h:outputScript>
+			-->		
 		</ui:define>
+		
 	</ui:composition>	
 </h:body>
 </html>

@@ -30,5 +30,9 @@ public class NavigationBean implements Serializable{
 	public String gotoaddKRIBatchPage() {
 		return "/kri/addkribatch.xhtml?faces-redirect=true";
 	}
+	
+	public String gotoupdateKRIPage() {
+		return "/kri/updatekri.xhtml?faces-redirect=true";
+	}
 
 }

@@ -42,7 +42,15 @@ public class KriBean implements Serializable {
 	private KRI kri = new KRI();
 	private MessengerUtil messengerUtil = new MessengerUtil();
 	private boolean isValidated = false;
+	private List<KRI> allDeptKRIs;
 	
+	
+	public List<KRI> getAllDeptKRIs() {
+		return allDeptKRIs;
+	}
+	public void setAllDeptKRIs(List<KRI> allDeptKRIs) {
+		this.allDeptKRIs = allDeptKRIs;
+	}
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
@@ -141,13 +149,13 @@ public class KriBean implements Serializable {
 	}//End of addKRI
 	
 	public void reset() {
-		System.out.println("Invoked ... in Bean");
 		this.kri.reset();
 	}
 	
 	public List<KRI> findOneKRI(String kri_desc) {
 		return getKriService().findKRI(kri_desc);
 	}
+	
 	public void checkKRI() {
 		try {
 			KRI kriExists = getKriService().findKRI(kri.getKri_code(), kri.getKri_owner_dept().getDeptid());
@@ -169,19 +177,33 @@ public class KriBean implements Serializable {
 		
 	}
 	
-	public void updateKRI() {
-		if(kri == null) {
-			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "KRI does not exist", "Update KRI");
-		}else {
-			try {
-				getKriService().updateKRI(kri);
-				messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI updated successfully", "Update KRI");
-				kri.reset();
-			}catch (Exception e) {
-				messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e, "KRI update error");
+	public void getKRIProperties() {
+		System.out.println("This is invoked ...");
+		try {
+			System.out.println(kri_desc);
+			List<KRI> kris = getKriService().findKRI(kri.getKri_desc());
+			if(!(kris.isEmpty())) {
+				kri = kris.get(0);
 			}
-			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	public void updateKRI() {
+		System.out.println(kri.getKri_desc()); //partialSubmit
+//		if(kri == null) {
+//			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "KRI does not exist", "Update KRI");
+//		}else {
+//			try {
+//				getKriService().updateKRI(kri);
+//				messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI updated successfully", "Update KRI");
+//				kri.reset();
+//			}catch (Exception e) {
+//				messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e, "KRI update error");
+//			}
+//			
+//		}
 	}
 	
 	public void deleteKRI() {
@@ -209,13 +231,13 @@ public class KriBean implements Serializable {
 		}
 	}
 	
-	public List<KRI> getAllKRIsForDepartment(){
-		List<KRI> allKRIs = getKriService().findAllKRIs(getKri_owner_dept().getDeptid());
+	public void getAllKRIsForDepartment(){
+		List<KRI> allKRIs = getKriService().findAllKRIs(kri.getKri_owner_dept().getDeptid());
 		if(allKRIs.isEmpty()) {
-			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "There are KRIs for this department...", "All KRIs");
-			return null;
+			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "There are no KRIs for this department...", "All KRIs");
+			
 		}else {
-			return allKRIs;
+			setAllDeptKRIs(allKRIs);
 		}
 	}
 	

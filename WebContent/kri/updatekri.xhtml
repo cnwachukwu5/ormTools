@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+		<h:outputStylesheet library="css" name="stylemenu.css"/>
+			<span style="font-weight: bold; font-size: 20px">KRI Manager</span><p:separator/>
+			<div class="kri_manager" style="margin-left: 3%; font-size: 11px">
+
+					<p:spacer width="20" height="15"/><p:spacer width="20" height="15"/>
+					<h:form id="add" style="margin-left:10%">
+						<p:messages id="messages" closable="true"/>			
+    					<h:panelGrid columns="4" cellpadding="5" cellspacing="3">
+    						   						
+    						<p:spacer width="20" height="0"/>
+    						<p:outputLabel for="departments" value="Department: "/>
+    						<p:spacer width="100"/>
+    						<p:selectOneMenu id="departments" value="#{kriBean.kri.kri_owner_dept}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
+    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
+    							<p:ajax listener="#{kriBean.getAllKRIsForDepartment()}" update="departmentKRIs messages"/>
+    						</p:selectOneMenu>
+    						
+    							
+    						<p:spacer width="40" height="10"/><p:spacer width="40" height="10"/><p:spacer width="40" height="10"/><p:spacer width="40" height="10"/>
+    						
+    						<p:spacer width="20"/>
+    						<p:outputLabel for="departmentKRIs" value="KRI Name: "/>
+    						<p:spacer width="40"/>
+    						<p:selectOneMenu id="departmentKRIs" value="#{kriBean.kri.kri_desc}" style="width:190px" required="true" requiredMessage="This field is required">
+    							<f:selectItem itemLabel="Choose KRI to update" itemValue=""/>
+    							<f:selectItems value="#{kriBean.allDeptKRIs}" var="kri" itemLabel="#{kri.kri_desc}" itemValue="#{kri.kri_desc}"/>	
+    							<p:ajax  process="@this" listener="#{kriBean.getKRIProperties()}" update="@this kriReason lowThreshold upperThreshold status"/>		
+    						</p:selectOneMenu>
+    						  						
+    						    						
+    						<p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/>
+    						
+    						<p:spacer width="20" height="33"/>
+    						<p:outputLabel for="kriReason" value="Reason for collection: "/>
+    						<p:spacer width="40"/>
+    						<p:inputTextarea id="kriReason" rows="4" cols="50" value="#{kriBean.kri.kri_reason_for_collection}" counter="display" maxlength="150" counterTemplate="{0} characters remaining" required="true" requiredMessage="Value required"/>
+    						<p:spacer width="40" height="0"/><p:spacer width="40" height="0"/><p:spacer width="40" height="0"/><h:outputText id="display" />
+    						
+    						<p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/>
+    						
+    						<p:spacer width="20" height="33"/>
+    						<p:outputLabel for="krithreshold" value="KRI thresholds: "/>
+    						<p:spacer width="40"/>
+    						<p:fieldset id="krithreshold">
+    							<h:panelGrid columns="4" cellpadding="10" cellspacing="3">
+    								<p:outputLabel for="lowThreshold" value="Lower threshold: "/>
+    								<p:spacer width="20" height="0"/>
+    								<p:inputText id="lowThreshold" value="#{kriBean.kri.kri_lower_bound}" label="lower threshold" required="true" requiredMessage="Value required" validatorMessage="Only numbers allowed"  converter="javax.faces.Double" size="5">
+    									<f:validateDoubleRange minimum="0.0" maximum="1000000.0"/>
+    									<p:ajax/>
+    								</p:inputText>
+    								<p:message for="lowThreshold" id="lowmsg"/>
+    								
+    								<p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/>
+    								
+    								<p:outputLabel for="upperThreshold" value="Upper threshold: "/>
+    								<p:spacer width="40" height="0"/>
+    								<p:inputText id="upperThreshold" value="#{kriBean.kri.kri_upper_bound}" label="upper threshold" required="true" requiredMessage="Value required" validatorMessage="Only numbers allowed" converter="javax.faces.Double" size="5">
+    									<f:validateDoubleRange minimum="0.0" maximum="1000000.0"/>
+    									<p:ajax listener="#{kriBean.checkThresholdValues}" update="messages"/>
+    								</p:inputText>
+    								<p:message for="upperThreshold" id="upmsg"/>
+    							</h:panelGrid>
+    						</p:fieldset>
+    						
+    						<p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/><p:spacer width="40" height="12"/>
+    						
+    						<p:spacer width="20" height="33"/>
+    						<p:outputLabel for="status" value="Is active: "/>
+    						<p:spacer width="40"/>
+							<p:selectBooleanCheckbox id="status" value="#{kriBean.kri.kri_status}" />
+							
+    					</h:panelGrid>
+    					<p:spacer width="200" height="40"/><p:spacer width="0" height="40"/>
+    					<p:commandButton id="inputKRI" styleClass="inputKRI" value="Update KRI" actionListener="#{kriBean.updateKRI()}" update="messages" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:blockUI block="add" trigger="inputKRI">
+    						Please wait: Adding KRI<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    					</p:blockUI>
+								<p:spacer width="200" height="40"/>			
+					</h:form>
+					
+				</div>
+		</ui:define>
+	</ui:composition>	
+</h:body>
+</html>

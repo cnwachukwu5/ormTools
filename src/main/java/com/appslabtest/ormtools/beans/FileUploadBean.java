@@ -10,7 +10,11 @@ import java.util.List;
 
 import javafx.util.Pair;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -50,6 +54,21 @@ public class FileUploadBean implements Serializable {
 	@Autowired
 	private DepartmentService departmentService;
 	
+	private boolean rejectsExists;
+	
+	@PostConstruct
+	private void init() {
+		rejectsExists = true;
+	}
+	
+	public boolean isRejectsExists() {
+		return rejectsExists;
+	}
+
+	public void setRejectsExists(boolean rejectsExists) {
+		this.rejectsExists = rejectsExists;
+	}
+
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
@@ -168,9 +187,13 @@ public class FileUploadBean implements Serializable {
 				
 				System.out.println("Rejects size after: " + rejects.size());
 				
+				setRejectsExists(false);
+				
 				if(rejects.isEmpty() && status) {
 					new MessengerUtil().addMessage(FacesMessage.SEVERITY_INFO,"KRIs added successfully ", "Batch upload KRIs");
 				}else {
+					setRejectsExists(true);
+					disableComponent();
 					writeRejectsToFile(rejects);
 					new MessengerUtil().addMessage(FacesMessage.SEVERITY_WARN,"Some KRIs were not uploaded. Check the reject panel for details ", "Batch upload KRIs");
 				}
@@ -289,4 +312,9 @@ public class FileUploadBean implements Serializable {
 		return validated;
 	}//End of method
 	
+	private void disableComponent() {
+		UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		UIComponent component = viewRoot.findComponent("form4:rejects");
+		component.getAttributes().put("disabled", false);
+	}
 }

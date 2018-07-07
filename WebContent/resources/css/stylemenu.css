@@ -16,3 +16,38 @@
 #searchUserToUpdate{
 	width: 60%;
 }
+
+.iconOption{
+	margin: auto;
+	float: left;
+	background-color: white;
+	width: 30%;
+    padding: 60px;
+    display: block;
+    border: 1px solid gray;
+    box-shadow: 5px 10px 8px #888888;
+   }
+
+.mainPanel{
+	/*background-color: #e9e9e9;*/
+	padding: 20px;
+	
+}
+
+.mainPanel:after{
+	content: '';
+	display: block;
+	clear: both;
+	}
+
+.icons{
+	margin: 0 auto;  
+	display: block;
+	font-size: 80px;
+}
+
+.texts{
+	margin-top: 5%;
+	font-size: 16px;
+	display: block;
+}
