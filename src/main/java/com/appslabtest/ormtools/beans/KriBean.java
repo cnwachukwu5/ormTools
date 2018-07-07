@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+
 import org.primefaces.context.RequestContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,22 +123,28 @@ public class KriBean implements Serializable {
 		/*
 		 * This method adds a new KRI to the KRI table
 		 */
+		checkThresholdValues();
 		if(isValidated) {
 			 try {
-					KRI newKRI = new KRI();
-					String kriID = new IDGen().getGeneratedID(kri.getKri_owner_dept().getDept_name());
-					newKRI.setKri_code(kriID);
-					newKRI.setKri_desc(kri.getKri_desc());
-					newKRI.setKri_reason_for_collection(kri.getKri_reason_for_collection());
-					newKRI.setKri_lower_bound(kri.getKri_lower_bound());
-					newKRI.setKri_upper_bound(kri.getKri_upper_bound());
-					newKRI.setKri_owner_dept(kri.getKri_owner_dept());
-					newKRI.setKri_status(kri.isKri_status());
-					newKRI.setKri_deactivate_reason("");
-					
-					getKriService().addKRI(newKRI);
-					reset();
-					messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI created succesfully", "Add new KRI");
+				 List<KRI> kris = findOneKRI(kri.getKri_desc());
+				 if((kris.isEmpty())) {
+					 KRI newKRI = new KRI();
+						String kriID = new IDGen().getGeneratedID(kri.getKri_owner_dept().getDept_name());
+						newKRI.setKri_code(kriID);
+						newKRI.setKri_desc(kri.getKri_desc());
+						newKRI.setKri_reason_for_collection(kri.getKri_reason_for_collection());
+						newKRI.setKri_lower_bound(kri.getKri_lower_bound());
+						newKRI.setKri_upper_bound(kri.getKri_upper_bound());
+						newKRI.setKri_owner_dept(kri.getKri_owner_dept());
+						newKRI.setKri_status(kri.isKri_status());
+						newKRI.setKri_deactivate_reason("");
+						
+						getKriService().addKRI(newKRI);
+						reset();
+						messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI created succesfully", "Add new KRI");
+				 }else {
+					 messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "This KRI already exists", "Add new KRI");
+				 }
 					
 				}catch(DataAccessException dataAccessException) {
 					messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + dataAccessException.getMessage(), "KRI creation Error");
@@ -149,7 +156,14 @@ public class KriBean implements Serializable {
 	}//End of addKRI
 	
 	public void reset() {
-		this.kri.reset();
+		kri.setKri_code("");
+		kri.setKri_desc("");
+		kri.setKri_reason_for_collection("");
+		kri.setKri_lower_bound(0);
+		kri.setKri_upper_bound(0);
+		kri.setKri_owner_dept(null);
+		kri.setKri_status(false);
+		kri.setKri_deactivate_reason("");
 	}
 	
 	public List<KRI> findOneKRI(String kri_desc) {
@@ -180,7 +194,6 @@ public class KriBean implements Serializable {
 	public void getKRIProperties() {
 		System.out.println("This is invoked ...");
 		try {
-			System.out.println(kri_desc);
 			List<KRI> kris = getKriService().findKRI(kri.getKri_desc());
 			if(!(kris.isEmpty())) {
 				kri = kris.get(0);
@@ -192,18 +205,18 @@ public class KriBean implements Serializable {
 	
 	public void updateKRI() {
 		System.out.println(kri.getKri_desc()); //partialSubmit
-//		if(kri == null) {
-//			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "KRI does not exist", "Update KRI");
-//		}else {
-//			try {
-//				getKriService().updateKRI(kri);
-//				messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI updated successfully", "Update KRI");
-//				kri.reset();
-//			}catch (Exception e) {
-//				messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e, "KRI update error");
-//			}
-//			
-//		}
+		if(kri == null) {
+			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "KRI does not exist", "Update KRI");
+		}else {
+			try {
+				getKriService().updateKRI(kri);
+				messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI updated successfully", "Update KRI");
+			}catch (Exception e) {
+				messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e, "KRI update error");
+			}
+			
+		}
+			
 	}
 	
 	public void deleteKRI() {
@@ -244,10 +257,9 @@ public class KriBean implements Serializable {
 	public void checkThresholdValues() {
 		
 		if(kri.getKri_lower_bound() > kri.getKri_upper_bound()) {
-			System.out.println("Executed");
 			isValidated = false;
 			//messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
-			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Low threshold bound should not be greater than upper bound...", "KRI Threshold values");
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,  "KRI Threshold values", "Low threshold bound must be less than upper threshold bound...");
 			RequestContext.getCurrentInstance().showMessageInDialog(facesMessage);
 		}else {
 			isValidated = true;

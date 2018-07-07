@@ -38,7 +38,7 @@
     						<p:spacer width="20"/>
     						<p:outputLabel for="departmentKRIs" value="KRI Name: "/>
     						<p:spacer width="40"/>
-    						<p:selectOneMenu id="departmentKRIs" value="#{kriBean.kri.kri_desc}" style="width:190px" required="true" requiredMessage="This field is required">
+    						<p:selectOneMenu id="departmentKRIs" value="#{kriBean.kri.kri_desc}" style="width:190px" required="true" requiredMessage="KRI name field is required">
     							<f:selectItem itemLabel="Choose KRI to update" itemValue=""/>
     							<f:selectItems value="#{kriBean.allDeptKRIs}" var="kri" itemLabel="#{kri.kri_desc}" itemValue="#{kri.kri_desc}"/>	
     							<p:ajax  process="@this" listener="#{kriBean.getKRIProperties()}" update="@this kriReason lowThreshold upperThreshold status"/>		
@@ -89,9 +89,9 @@
 							
     					</h:panelGrid>
     					<p:spacer width="200" height="40"/><p:spacer width="0" height="40"/>
-    					<p:commandButton id="inputKRI" styleClass="inputKRI" value="Update KRI" actionListener="#{kriBean.updateKRI()}" update="messages" style="padding: 0.5% 10%; margin-top:1%"/>
-    					<p:blockUI block="add" trigger="inputKRI">
-    						Please wait: Adding KRI<br/>
+    					<p:commandButton id="updateKRIButton" styleClass="inputKRI" value="Update KRI" actionListener="#{kriBean.updateKRI()}" update="messages" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:blockUI block="add" trigger="updateKRIButton">
+    						Please wait: Updating KRI<br/>
     							<p:graphicImage url="/images/status1.jpg" />
     					</p:blockUI>
 								<p:spacer width="200" height="40"/>			

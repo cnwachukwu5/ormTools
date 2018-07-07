@@ -9,7 +9,7 @@ import com.appslabtest.ormtools.model.*;
 
 public interface KRIRepository extends JpaRepository<KRI, Integer>{
 	
-	@Query(value="SELECT * FROM KRI WHERE kri_code = ?1 AND kri_owner_dept = ?2 AND kri_status > 0", nativeQuery = true)
+	@Query(value="SELECT * FROM KRI WHERE kri_code = ?1 AND kri_owner_dept = ?2", nativeQuery = true)
 	public KRI findKRI(String kri_code, int kri_owner_dept);
 	
 	@Query(value="SELECT * FROM KRI WHERE kri_desc = ?1", nativeQuery = true)
