@@ -38,9 +38,6 @@ public class KRIServiceImpl implements KRIService{
 	@Transactional
 	public void updateKRI(KRI kri) throws Exception{
 		
-		System.out.println("----------------------------------------------------");
-		System.out.println("KRI Code: " + kri.getKri_code());
-		System.out.println("KRI Dept ID: " + kri.getKri_owner_dept().getDeptid());
 		KRI kriToUpdate = findKRI(kri.getKri_code(), kri.getKri_owner_dept().getDeptid());
 		
 		if(kriToUpdate == null) {

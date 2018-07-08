@@ -51,10 +51,14 @@
 							</li>
 							<li>
 								<p:commandLink action="#{navigationBean.gotoupdateKRIPage()}">
-									<span class="sub-sub"> </span> <h:outputText value="Update KRI"/>
+									<span class="sub-sub"><h:outputText value="Update KRI"/> </span> 
 								</p:commandLink>
 							</li>
-							<li><a href="#">Delete KRI</a></li>
+							<li>
+								<p:commandLink action="#{navigationBean.gotodeleteKRIPage()}">
+									<span class="sub-sub"> <h:outputText value="Delete KRI"/></span> 
+								</p:commandLink>
+							</li>
 							<li><a href="#">Submit KRI value</a></li>
 						</ul>
 					</li>

@@ -224,9 +224,13 @@ public class KriBean implements Serializable {
 			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "KRI does not exist", "Delete KRI");
 		}else {
 			try {
-				getKriService().deleteKRI(kri);
-				messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI deleted successfully", "Delete KRI");
-				kri.reset();
+				if(!(kri.isKri_status())) {
+					messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "This KRI has already been deactivated", "Delete KRI");
+				}else {
+					getKriService().deleteKRI(kri);
+					messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI deleted successfully", "Delete KRI");
+				}				
+				
 			}catch (Exception e) {
 				messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e, "KRI deletion error");
 			}

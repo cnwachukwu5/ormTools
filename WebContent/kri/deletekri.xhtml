@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+		<h:outputStylesheet library="css" name="stylemenu.css"/>
+			<span style="font-weight: bold; font-size: 20px">KRI Manager - Delete KRI</span><p:separator/>
+			<div class="kri_manager" style="margin-left: 3%; margin-top: 5%; font-size: 11px">
+
+					<p:spacer width="20" height="15"/><p:spacer width="20" height="15"/>
+					<h:form id="add" style="margin-left:10%">
+						<p:messages id="messages" closable="true"/>			
+    					<h:panelGrid columns="4" cellpadding="5" cellspacing="3">
+    						   						
+    						<p:spacer width="20" height="0"/>
+    						<p:outputLabel for="departments" value="Department: "/>
+    						<p:spacer width="100"/>
+    						<p:selectOneMenu id="departments" value="#{kriBean.kri.kri_owner_dept}" converter="selectOneMenuConverter" style="width:190px" required="true" requiredMessage="Department is required">
+    							<f:selectItem itemLabel="Select department" itemValue=""></f:selectItem>
+    							<f:selectItems value="#{departmentBean.departments}" var="dept" itemLabel="#{dept.dept_name}" itemValue="#{dept}"/>
+    							<p:ajax listener="#{kriBean.getAllKRIsForDepartment()}" update="departmentKRIs messages"/>
+    						</p:selectOneMenu>
+    						
+    							
+    						<p:spacer width="40" height="10"/><p:spacer width="40" height="10"/><p:spacer width="40" height="10"/><p:spacer width="40" height="10"/>
+    						
+    						<p:spacer width="20"/>
+    						<p:outputLabel for="departmentKRIs" value="KRI Name: "/>
+    						<p:spacer width="40"/>
+    						<p:selectOneMenu id="departmentKRIs" value="#{kriBean.kri.kri_desc}" style="width:190px" required="true" requiredMessage="KRI name field is required">
+    							<f:selectItem itemLabel="Choose KRI to update" itemValue=""/>
+    							<f:selectItems value="#{kriBean.allDeptKRIs}" var="kri" itemLabel="#{kri.kri_desc}" itemValue="#{kri.kri_desc}"/>	
+    							<p:ajax  process="@this" listener="#{kriBean.getKRIProperties()}" update="@this"/>		
+    						</p:selectOneMenu>
+    					</h:panelGrid>
+    					<p:spacer width="200" height="40"/><p:spacer width="0" height="40"/>
+    					<p:commandButton id="deleteKRIButton" styleClass="inputKRI" value="Delete KRI" actionListener="#{kriBean.deleteKRI()}" update="messages" style="padding: 0.5% 10%; margin-top:1%"/>
+    					<p:blockUI block="add" trigger="deleteKRIButton">
+    						Please wait: Deleting KRI<br/>
+    							<p:graphicImage url="/images/status1.jpg" />
+    					</p:blockUI>
+								<p:spacer width="200" height="100"/>			
+					</h:form>	  						
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>					

@@ -34,5 +34,9 @@ public class NavigationBean implements Serializable{
 	public String gotoupdateKRIPage() {
 		return "/kri/updatekri.xhtml?faces-redirect=true";
 	}
+	
+	public String gotodeleteKRIPage() {
+		return "/kri/deletekri.xhtml?faces-redirect=true";
+	}
 
 }
