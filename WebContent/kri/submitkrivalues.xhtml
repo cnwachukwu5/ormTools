@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<title>Operational Risk Management Tools</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="content">
+		<h:outputStylesheet library="css" name="stylemenu.css"/>
+			<span style="font-weight: bold; font-size: 20px">KRI Manager - Submit KRI Value</span><p:separator/>
+			<div class="kri_manager" style="margin-left: 20%; font-size: 11px">
+
+					<p:spacer width="20" height="15"/><p:spacer width="20" height="15"/>
+					<h:form id="addkriValue" style="margin-left:10%">
+						<p:messages id="messages" closable="true"/>	
+							<p:spacer width="20"/><p:outputLabel id="statusUpdate" value="#{kriValueBean.getStatusUpdate()}" style="margin-left: 55%"/>
+						<h:panelGrid columns="3" cellspacing="5" cellpadding="5" style="margin-top: 2%">
+							
+							<p:outputLabel for="department" value="Department"/>
+							<p:spacer width="50"/>
+							<p:inputText id="department" value="#{kriValueBean.userBean.loggeduser.department.dept_name}" size="30" disabled="true"/>
+							
+							<p:outputLabel for="kriname" value="KRI Name"/>
+							<p:spacer width="50"/>
+							<p:inputText id="kriname" value="#{kriValueBean.kriBean.kri.kri_desc}" size="50" disabled="true"/>
+							
+							<p:outputLabel for="krivalue" value="KRI Value"/>
+							<p:spacer width="50"/>
+							<p:inputText id="krivalue" value="#{kriValueBean.kri_Value2.kri_value}"></p:inputText>
+							
+							<p:outputLabel for="krivaluejustification" value="Justification"/>
+							<p:spacer width="50"/>
+							<p:inputTextarea id="krivaluejustification" rows="4" cols="50" value="#{kriValueBean.kri_Value2.kri_value_justification}" counter="display" maxlength="200" counterTemplate="{0} characters remaining"/>
+							<p:spacer width="20" height="0"/><p:spacer width="20" height="0"/><h:outputText id="display" />
+						</h:panelGrid>
+						<p:spacer width="100" height="100"/>
+						<p:commandButton id="previous" value=" &lt;&lt;   Previous"/> <p:spacer width="50"/>
+						<p:commandButton id="next" value="  Next   &gt;&gt;" /> <p:spacer width="50"/>
+						<p:commandButton id="submit" value="  Submit" actionListener="#{kriValueBean.showInjectedValues()}"/>
+					</h:form>
+				</div>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>								

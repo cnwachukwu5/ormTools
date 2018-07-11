@@ -6,7 +6,7 @@
 <h:body>
 	<ui:composition xmlns:h="http://java.sun.com/jsf/html">
 		<h:outputStylesheet library="css" name="layout.css"  />
-		<h:form>
+		<h:form id="menuForm">
 			<div class="main-nav">
 				<ul class="main-nav-ul">
 					<li><a href="/ormTools/main.xhtml">Home</a></li>
@@ -59,7 +59,11 @@
 									<span class="sub-sub"> <h:outputText value="Delete KRI"/></span> 
 								</p:commandLink>
 							</li>
-							<li><a href="#">Submit KRI value</a></li>
+							<li>
+								<p:commandLink id="submitValue" action="#{navigationBean.gotosumitKRIValuePage()}">
+									<span class="sub-sub"> <h:outputText value="Submit KRI Value"/></span> 
+								</p:commandLink>
+							</li>
 						</ul>
 					</li>
 					<li><a href="#">Incident Register</a></li>	
@@ -67,40 +71,6 @@
 				</ul>
 			</div>
 
-		
-			<!-- <ul class="menu">
-				<li>
-					<p:commandLink class="menulist">
-						<h:outputText value="Menu"/> 
-					</p:commandLink>
-				</li>
-				
-				<li>
-					<div class="dropdown" style="padding:0;margin:0">
-						
-						<a id="krimanager" class="dropbtn">KRI Manager</a>
-						
-						<div class="dropdown-content">
-							<a id="add">Add KRI</a>
-							<a id="update">Update KRI</a>
-							<a id="delete">Delete KRI</a>
-							<a id="submit">Submit KRI Value</a>
-						</div>
-					</div>
-					
-				</li>
-				<li>
-					<p:commandLink class="menulist">
-						<h:outputText value="Incident Register" /> 
-					</p:commandLink>
-				</li>
-				<li>
-					<p:commandLink class="menulist">
-						<h:outputText value="View Report" /> 
-					</p:commandLink>
-				</li>
-			</ul>
-			 -->
 		</h:form>
 	</ui:composition>
 </h:body>

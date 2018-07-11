@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.appslabtest.ormtools.service.KRI_ValueService;
+import com.appslabtest.ormtools.model.Department;
 import com.appslabtest.ormtools.model.KRI;
 import com.appslabtest.ormtools.model.KRI_Value;
 import com.appslabtest.ormtools.model.Month;
@@ -44,8 +45,18 @@ public class KriValueBean implements Serializable{
 	private String kri_value_justification;
 	private String quarter;
 	private MessengerUtil messengerUtil = new MessengerUtil();
+	private List<KRI> allDeptKRIs;
+	private int counter;
 	
 	private KRI_Value kri_Value2 = new KRI_Value();
+	
+	public int getCounter() {
+		return counter;
+	}
+	
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
 	
 	public KriBean getKriBean() {
 		return kriBean;
@@ -58,6 +69,13 @@ public class KriValueBean implements Serializable{
 	}
 	public void setUser(UserBean userBean) {
 		this.userBean = userBean;
+	}
+	
+	public List<KRI> getAllDeptKRIs() {
+		return allDeptKRIs;
+	}
+	public void setAllDeptKRIs(List<KRI> allDeptKRIs) {
+		this.allDeptKRIs = allDeptKRIs;
 	}
 	public KRI_Value getKri_Value2() {
 		return kri_Value2;
@@ -141,12 +159,43 @@ public class KriValueBean implements Serializable{
 			newKRIValue.setQuarter(current.currentQuarter());
 			
 			getKri_ValueService().addKRIValue(newKRIValue);
-			messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI value added succesfully", "Add new KRI value");
+			//messengerUtil.addMessage(FacesMessage.SEVERITY_INFO, "KRI value added succesfully", "Add new KRI value");
 			
 		}catch(DataAccessException accessException) {
 			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + accessException.getMessage(), "KRI value creation Error");
 		}
 	}//End of addValue method
 	
+	public List<KRI> getAllActiveKRIForDepartment(Department department){
+		/**
+		 * Returns all active KRIs for the department passed as parameter
+		 * @param department
+		 * @return List of KRIs for the department
+		 */
+		return getKriBean().getAllActiveKRIsForDepartment(department);
+	}
 	
+	public void getDepartmentKRIs() {
+		/**
+		 * Returns all active kris for the user department and set the first kri instance
+		 */
+		
+		allDeptKRIs = getAllActiveKRIForDepartment(getUserBean().getLoggeduser().getDepartment());
+		
+		if(allDeptKRIs == null || allDeptKRIs.isEmpty()) {
+			messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "There are not KRIs for the user department.", "Get User KRIs");
+		}else {
+			setCounter(0);
+			getKriBean().setKri(allDeptKRIs.get(getCounter()));
+		}
+	}
+	
+	public String getStatusUpdate() {
+		return (getCounter() + 1) + " of " + allDeptKRIs.size();
+	}
+	
+	public void showInjectedValues() {
+		System.out.println("Logged in user: " + getUserBean().getUser().getUsername() + " " + getUserBean().getLoggeduser().getEmail() 
+				+ " " + getUserBean().getLoggeduser().getDepartment());
+	}
 }

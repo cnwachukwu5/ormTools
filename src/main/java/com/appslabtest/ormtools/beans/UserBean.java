@@ -198,7 +198,6 @@ public class UserBean implements Serializable {
 	}
 	
 	public void deleteUser() throws Exception {
-		System.out.println("User: " + user);
 		if(user.getFirstname() == null) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "User does not exist.","Delete");
 		}else {

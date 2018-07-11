@@ -2,6 +2,7 @@ package com.appslabtest.ormtools.beans;
 
 import java.io.Serializable;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -12,6 +13,17 @@ public class NavigationBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Autowired
+	KriValueBean kriValueBean;
+	
+	public KriValueBean getKriValueBean() {
+		return kriValueBean;
+	}
+
+	public void setKriValueBean(KriValueBean kriValueBean) {
+		this.kriValueBean = kriValueBean;
+	}
+
 	public String gotoCreateUserPage() {
 		return "/user/createuser.xhtml?faces-redirect=true";
 	}
@@ -37,6 +49,12 @@ public class NavigationBean implements Serializable{
 	
 	public String gotodeleteKRIPage() {
 		return "/kri/deletekri.xhtml?faces-redirect=true";
+	}
+	
+	public String gotosumitKRIValuePage() {
+		
+		getKriValueBean().getDepartmentKRIs();
+		return "/kri/submitkrivalues.xhtml?faces-redirect=true";
 	}
 
 }
