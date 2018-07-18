@@ -241,7 +241,6 @@ public class KriBean implements Serializable {
 	public List<KRI> getAllActiveKRIsForDepartment(Department department){
 		List<KRI> allActiveKRI = getKriService().findAllActiveKRI(department.getDeptid());
 		if(allActiveKRI.isEmpty()) {
-			//messengerUtil.addMessage(FacesMessage.SEVERITY_ERROR, "There are not active KRIs for this department...", "All active KRIs");
 			return null;
 		}else {
 			return allActiveKRI;

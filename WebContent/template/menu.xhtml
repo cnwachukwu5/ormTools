@@ -10,24 +10,24 @@
 			<div class="main-nav">
 				<ul class="main-nav-ul">
 					<li><a href="/ormTools/main.xhtml">Home</a></li>
-					<li class="has-sub"><p:commandLink disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
+					<li class="has-sub"><p:commandLink >
 											<span class="hasSub">
 												<h:outputText value="User Manager" />
 											</span><span class="sub-arrow"></span>
 										</p:commandLink>
 						<ul>
 							<li>
-								<p:commandLink action="#{navigationBean.gotoCreateUserPage()}">
+								<p:commandLink action="#{navigationBean.gotoCreateUserPage()}" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
 									<h:outputText value="Create User" />
 								</p:commandLink>
 							</li>
 							<li>
-								<p:commandLink action="#{navigationBean.gotoUpdateUserPage()}">
+								<p:commandLink action="#{navigationBean.gotoUpdateUserPage()}" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
 									<h:outputText value="Update User" />
 								</p:commandLink>	
 							</li>
 							<li>
-								<p:commandLink action="#{navigationBean.gotoDeleteUserPage()}">
+								<p:commandLink action="#{navigationBean.gotoDeleteUserPage()}" disabled="#{userBean.loggeduser.getRole().getRole() != 'admin'}">
 									<h:outputText value="Delete User" />
 								</p:commandLink>								
 							</li>

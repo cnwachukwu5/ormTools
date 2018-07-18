@@ -25,14 +25,15 @@ public class KRI_Value implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="kri_code")
-	private KRI kri_code;
+	private KRI kri;
 	
 	@Column(name="kriValue", nullable=false)
 	private double kri_value;
 	
-	@ManyToOne
-	@JoinColumn(name="kri_value_month")
-	private Month kri_value_month;
+	/*@ManyToOne
+	@JoinColumn(name="kri_value_month")*/
+	@Column(name="kri_value_month")
+	private String kri_value_month;
 	
 	@Column(name="kri_value_year", nullable=false)
 	private String kri_value_year;
@@ -58,12 +59,12 @@ public class KRI_Value implements Serializable{
 		this.id = id;
 	}
 
-	public KRI getKri_code() {
-		return kri_code;
+	public KRI getKri() {
+		return kri;
 	}
 
-	public void setKri_code(KRI kri_code) {
-		this.kri_code = kri_code;
+	public void setKri(KRI kri) {
+		this.kri = kri;
 	}
 
 	public double getKri_value() {
@@ -74,11 +75,11 @@ public class KRI_Value implements Serializable{
 		this.kri_value = kri_value;
 	}
 
-	public Month getKri_value_month() {
+	public String getKri_value_month() {
 		return kri_value_month;
 	}
 
-	public void setKri_value_month(Month kri_value_month) {
+	public void setKri_value_month(String kri_value_month) {
 		this.kri_value_month = kri_value_month;
 	}
 
@@ -129,7 +130,7 @@ public class KRI_Value implements Serializable{
 
 	public String toString() {
 		return "KRIValue: " + 
-				"KRI_CODE: " + this.getKri_code() + 
+				"KRI_CODE: " + this.getKri() + 
 				"KRI_VALUE: " + this.getKri_value() + 
 				"KRI_MONTH: " + this.getKri_value_month()
 				+ "KRI_YEAR: " + this.getKri_value_year() 

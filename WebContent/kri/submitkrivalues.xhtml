@@ -30,21 +30,23 @@
 							
 							<p:outputLabel for="kriname" value="KRI Name"/>
 							<p:spacer width="50"/>
-							<p:inputText id="kriname" value="#{kriValueBean.kriBean.kri.kri_desc}" size="50" disabled="true"/>
+							<p:inputText id="kriname" value="#{kriValueBean.kri_Value2.kri.kri_desc}" size="50" disabled="true"/>
 							
 							<p:outputLabel for="krivalue" value="KRI Value"/>
 							<p:spacer width="50"/>
-							<p:inputText id="krivalue" value="#{kriValueBean.kri_Value2.kri_value}"></p:inputText>
+							<p:inputText id="krivalue" value="#{kriValueBean.kri_Value2.kri_value}" required="true" requiredMessage="KRI value is required" validatorMessage="Only numbers allowed.">
+								<f:validateDoubleRange minimum="0.0" maximum="1000000.0"/>
+							</p:inputText>
 							
 							<p:outputLabel for="krivaluejustification" value="Justification"/>
 							<p:spacer width="50"/>
-							<p:inputTextarea id="krivaluejustification" rows="4" cols="50" value="#{kriValueBean.kri_Value2.kri_value_justification}" counter="display" maxlength="200" counterTemplate="{0} characters remaining"/>
+							<p:inputTextarea id="krivaluejustification" rows="4" cols="50" value="#{kriValueBean.kri_Value2.kri_value_justification}" counter="display" maxlength="200" counterTemplate="{0} characters remaining" required="true" requiredMessage="Justification is required"/>
 							<p:spacer width="20" height="0"/><p:spacer width="20" height="0"/><h:outputText id="display" />
 						</h:panelGrid>
-						<p:spacer width="100" height="100"/>
-						<p:commandButton id="previous" value=" &lt;&lt;   Previous"/> <p:spacer width="50"/>
-						<p:commandButton id="next" value="  Next   &gt;&gt;" /> <p:spacer width="50"/>
-						<p:commandButton id="submit" value="  Submit" actionListener="#{kriValueBean.showInjectedValues()}"/>
+						<p:spacer width="20" height="100"/>
+						<p:commandButton id="previous" value=" &lt;&lt;   Previous" actionListener="#{kriValueBean.previousButtonAction()}" disabled="#{kriValueBean.isDisablePreviousButton()}" style="padding: 0.5% 5%;" update="addkriValue"/> <p:spacer width="50"/>
+						<p:commandButton id="next" value="  Next   &gt;&gt;" actionListener="#{kriValueBean.nextButtonAction()}" disabled = "#{kriValueBean.isDisableNextButton()}" style="padding: 0.5% 5%;" update="addkriValue"/> <p:spacer width="50"/>
+						<p:commandButton id="submit" value="  Submit" actionListener="#{kriValueBean.submitAction()}" disabled="#{kriValueBean.isDisableSubmitButton()}" style="padding: 0.5% 5%;"/>
 					</h:form>
 				</div>
 			</ui:define>

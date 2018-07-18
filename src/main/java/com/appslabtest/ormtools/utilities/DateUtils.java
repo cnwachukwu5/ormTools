@@ -6,6 +6,7 @@ import java.util.Calendar;
 public class DateUtils {
 	
 	private Calendar currentCalendarInstance;
+	String monthName[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
 	public DateUtils() {
 		currentCalendarInstance = Calendar.getInstance();
@@ -20,9 +21,13 @@ public class DateUtils {
 	}
 
 	public String getCurrentMonth() {
-		String monthName[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		int monthNumber = getCurrentCalendarInstance().get(Calendar.MONTH);
 		return monthName[monthNumber];
+	}
+	
+	public String kriMonth() {
+		int monthNumber = getCurrentCalendarInstance().get(Calendar.MONTH);
+		return monthName[monthNumber - 1];
 	}
 	
 	public String currentQuarter() {
